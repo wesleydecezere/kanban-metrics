@@ -12,4 +12,5 @@ datasource db {
 
 model Sprint {
     id Int @id @default(autoincrement())
+    name String
 }

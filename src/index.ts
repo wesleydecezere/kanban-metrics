@@ -9,11 +9,6 @@ const CLIENT_BASE_URL = "http://localhost:3000";
 const app = express();
 
 app.use(cors({ origin: [CLIENT_BASE_URL] }));
-
-// Resposta padrão para quaisquer outras requisições:
-app.use((req, res) => {
-  res.status(404);
-});
 app.use("/api", sprintRouters);
 
 app.get("/", (req, res) => {

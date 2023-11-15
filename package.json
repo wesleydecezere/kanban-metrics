@@ -7,8 +7,11 @@
     "dev": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \" ts-node ./src/index.ts\"",
     "build": "tsc",
     "nvm:latest": ". $NVM_DIR/nvm.sh && nvm install --lts && nvm alias latest lts/* && nvm use latest",
-    "start": "yarn nvm:latest && node ./dist/index.js",
+    "start": "yarn nvm:latest && ts-node ./src/index.ts",
     "migrate": "yarn nvm:latest && npx prisma migrate dev"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "5.5.2",

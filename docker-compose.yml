@@ -12,5 +12,3 @@ services:
       - .env
     ports:
       - 0001:5432
-    volumes:
-      - ./resources/sql/init.sql:/docker-entrypoint-initdb.d/init.sql

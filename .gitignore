@@ -138,4 +138,8 @@ dist
 
 # generated files
 src/generated/
-.env
+
+.env*
+.flaskenv*
+!.env.project
+!.env.vault

@@ -4,6 +4,7 @@ import { apolloClient } from "../github-client/apolloClient";
 import {
   BoardIssues,
   BoardIssuesQuery,
+  BoardIssuesQueryVariables,
   LastIssues,
   LastIssuesQuery,
   LastIssuesQueryVariables,
@@ -28,14 +29,6 @@ ghRoutes.get("/octokit/issues-board", async (req, res) => {
 });
 
 ghRoutes.get("/apollo/issues-recent", async (req, res) => {
-  const result = await apolloClient().query({
-    query: BoardIssues,
-  });
-
-  res.send(result);
-});
-
-ghRoutes.get("/apollo/issues-board-2", async (req, res) => {
   const result = await apolloClient().query<
     LastIssuesQuery,
     LastIssuesQueryVariables
@@ -45,6 +38,17 @@ ghRoutes.get("/apollo/issues-board-2", async (req, res) => {
       repo: "pec",
       owner: "laboratoriobridge",
     },
+  });
+
+  res.send(result);
+});
+
+ghRoutes.get("/apollo/issues-board", async (req, res) => {
+  const result = await apolloClient().query<
+    BoardIssuesQuery,
+    BoardIssuesQueryVariables
+  >({
+    query: BoardIssues,
   });
 
   res.send(result);

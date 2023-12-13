@@ -1,4 +1,4 @@
-query QueryTeste {
+query BoardIssues {
   organization(login: "zDudaHang") {
     id
     name

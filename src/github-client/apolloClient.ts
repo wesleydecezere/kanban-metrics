@@ -14,8 +14,6 @@ export function apolloClient(): ApolloClient<NormalizedCacheObject> {
     );
   }
 
-  console.log(`token ${process.env.GITHUB_TOKEN}`);
-
   return new ApolloClient({
     link: new HttpLink({
       uri: "https://api.github.com/graphql",

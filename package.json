@@ -4,7 +4,7 @@
   "main": "./src/index.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "yarn codegen && nodemon --watch \"src/**\" --ext \"ts,json\" --exec \" ts-node ./src/index.ts\"",
+    "dev": "nodemon --watch \"src/**\" --ext \"ts,json,graphql\" --exec \" yarn codegen && ts-node ./src/index.ts\"",
     "build": "tsc",
     "nvm:latest": ". $NVM_DIR/nvm.sh && nvm install --lts && nvm alias latest lts/* && nvm use latest",
     "start": "yarn nvm:latest && ts-node ./src/index.ts",

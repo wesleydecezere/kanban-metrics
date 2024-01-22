@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { octokitFetchGraphQLQuery } from "../github-client/octokitClient";
-import { apolloClient } from "../github-client/apolloClient";
+import { GithubApolloClient } from "../github-client/GithubApolloClient";
 import {
   BoardIssues,
   BoardIssuesQuery,
@@ -29,7 +29,7 @@ ghRoutes.get("/octokit/issues-board", async (req, res) => {
 });
 
 ghRoutes.get("/apollo/issues-recent", async (req, res) => {
-  const result = await apolloClient().query<
+  const result = await new GithubApolloClient().query<
     LastIssuesQuery,
     LastIssuesQueryVariables
   >({
@@ -44,7 +44,7 @@ ghRoutes.get("/apollo/issues-recent", async (req, res) => {
 });
 
 ghRoutes.get("/apollo/issues-board", async (req, res) => {
-  const result = await apolloClient().query<
+  const result = await new GithubApolloClient().query<
     BoardIssuesQuery,
     BoardIssuesQueryVariables
   >({

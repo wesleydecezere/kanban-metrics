@@ -1,6 +1,3 @@
-// error handling based on https://www.apollographql.com/docs/react/data/error-handling/#advanced-error-handling-with-apollo-link
-// error handling based on https://www.marcinkwiatkowski.com/graphql/2-ways-of-handling-graphql-errors-in-apollo-client/#:~:text=You%20can%20set%20an%20error,an%20ignore%20policy%20for%20mutations.
-
 import {
   ApolloClient,
   HttpLink,
@@ -10,7 +7,7 @@ import {
 } from "@apollo/client/core";
 import { onError } from "@apollo/client/link/error";
 
-import fetch from "cross-fetch"; // será que elimina necessidade do cors?
+import fetch from "cross-fetch";
 
 export class GithubApolloClient extends ApolloClient<NormalizedCacheObject> {
   constructor() {

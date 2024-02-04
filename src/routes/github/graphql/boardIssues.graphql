@@ -1,5 +1,5 @@
 query BoardIssues {
-  organization(login: "zDudaHang") {
+  organization(login: "wesleydecezere") {
     id
     name
     projectV2(number: 27) {

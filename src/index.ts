@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
-import { sprintRoutes } from "./routes/sprintRoutes";
-import { ghRoutes } from "./routes/ghRoutes";
+import { sprintRoutes } from "./routes/sprint";
+import { githubRoutes } from "./routes/github";
 
 const HOSTNAME = process.env.HOSTNAME || "http://localhost";
 const PORT = process.env.PORT || 4000;
@@ -11,7 +11,7 @@ const app = express();
 
 app.use(cors({ origin: [CLIENT_BASE_URL] }));
 app.use("/api/sprint", sprintRoutes);
-app.use("/api/gh", ghRoutes);
+app.use("/github", githubRoutes);
 
 app.get("/", (req, res) => {
   res.send("Bem-vindo!");

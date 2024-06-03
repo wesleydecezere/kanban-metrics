@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "nodemon --watch \"src/**\" --ext \"ts,json,graphql\" --exec \" yarn codegen && ts-node ./src/index.ts\"",
     "build": "tsc",
-    "nvm:latest": ". $NVM_DIR/nvm.sh && nvm install --lts && nvm alias latest lts/* && nvm use latest",
-    "start": "yarn nvm:latest && ts-node ./src/index.ts",
-    "migrate": "yarn nvm:latest && npx prisma migrate dev",
+    "setup": ". $NVM_DIR/nvm.sh nvm install",
+    "start": "yarn setup && ts-node ./src/index.ts",
+    "migrate": "yarn setup && npx prisma migrate dev",
     "lint": "eslint . --ext .js --ext .ts --ext .gql --ext .graphql",
     "lint:fix": "yarn lint -- --fix",
     "codegen": "graphql-codegen --config codegen.ts"

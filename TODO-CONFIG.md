@@ -1,0 +1,7 @@
+- [ ] nvm: autoset every shell
+- [ ] linter
+- [ ] prettier
+- [ ] jest
+- [ ] logger
+- [ ] codegen: centralize config
+- [ ] tsc: remove?

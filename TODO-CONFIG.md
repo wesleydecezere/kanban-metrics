@@ -1,3 +1,4 @@
+- [ ] folder/file name pattern
 - [ ] nvm: autoset every shell
 - [ ] linter
 - [ ] prettier

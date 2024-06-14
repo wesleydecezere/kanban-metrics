@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { octokitFetchGraphQLQuery } from "../../github-client/octokitClient";
+import { octokitFetchGraphQLQuery } from "../../github-client/octokitClient.js";
 import {
   BoardIssues,
   BoardIssuesQuery,
   LastIssues,
   LastIssuesQuery,
-} from "../../generated/graphql";
+} from "../../graphql/generated/types.js";
 
 export const octokitRoutes = Router();
 

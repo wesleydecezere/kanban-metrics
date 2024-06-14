@@ -1,3 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 
-export const prisma = new PrismaClient();
+import { logDefinitions, queryLogger } from "./logger";
+
+export const prisma = new PrismaClient({
+  log: logDefinitions,
+});
+
+prisma.$on("query", queryLogger);

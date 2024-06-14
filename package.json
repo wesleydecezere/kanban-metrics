@@ -19,16 +19,18 @@
     "codegen": "graphql-codegen"
   },
   "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seeds/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "5.5.2",
+    "chalk": "^5.3.0",
     "cors": "^2.8.5",
     "eslint": "^8.53.0",
     "express": "^4.18.2",
     "graphql": "^16.8.1",
     "graphql-config": "^5.0.3",
     "node-fetch": "^3.3.2",
+    "moment": "^2.30.1",
     "octokit": "^3.1.2"
   },
   "devDependencies": {

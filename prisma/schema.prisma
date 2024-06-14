@@ -10,7 +10,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Sprint {
-    id Int @id @default(autoincrement())
-    name String
+model DimSprint {
+  @@unique([startWeekId, endWeekId])
+  id Int @id @default(autoincrement())
+  number Int
+  startWeekId Int 
+  endWeekId Int
+
+  startWeek DimYearWeek @relation(name: "StartYearWeek", fields: [startWeekId], references: [id])
+  endWeek DimYearWeek @relation(name: "EndYearWeek", fields: [endWeekId], references: [id])
+}
+
+model DimYearWeek {
+  @@unique([year, week])
+  id Int @id @default(autoincrement())
+  year Int
+  week Int // until 53
+  start DateTime @db.Date
+  end DateTime @db.Date
+
+  breakWeeks BreakWeek[] 
+
+  // https://www.prisma.io/docs/orm/prisma-schema/data-model/relations#disambiguating-relations
+  // https://github.com/prisma/prisma/discussions/8857 ~ virtual relation
+  // https://github.com/prisma/prisma/discussions/21244 ~ why ignore doesnt work
+  startSprints DimSprint[] @relation("StartYearWeek")
+  endSprints DimSprint[] @relation("EndYearWeek")
+}
+
+model BreakWeek {
+  id Int @id
+
+  DimYearWeek DimYearWeek @relation(fields: [id], references: [id])
 }

@@ -1,8 +1,8 @@
-- [ ] folder/file name pattern
-- [ ] nvm: autoset every shell
+- [x] folder/file name pattern
+- [x] nvm: autoset every shell
+- [x] codegen: centralize config
+- [ ] jest
 - [ ] linter
 - [ ] prettier
-- [ ] jest
-- [ ] logger
-- [ ] codegen: centralize config
+- [ ] logger?
 - [ ] tsc: remove?

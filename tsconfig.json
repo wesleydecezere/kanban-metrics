@@ -2,7 +2,8 @@
   // prisma doesnt like esm (https://github.com/prisma/prisma/issues/5030)
   "extends": "@tsconfig/node20/tsconfig.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    "allowJs": true
   },
   "include": ["src/**/*.ts"],
   "exclude": [

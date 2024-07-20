@@ -1,11 +1,14 @@
 import moment from "moment";
-import { DimSprintOperations } from "../operations/DimSprintOperations.js";
+import { DimSprintOperations } from "../../operations/DimSprintOperations.js";
 import chalk from "chalk";
 
 import { performance } from "perf_hooks";
+import { getSprintWeekNumbers } from "./util.js";
 
 /* TODO
- - [ ] remove logs after add tests
+ - [x] remove debug logs after add tests
+ - [ ] substituir moments.js -> date-fns? (nodejs-toolbox)
+ - [ ] create logger class to handle process time measurement and logs
   */
 
 const TIMER_LABEL = "seed:dimSprintWithDeps";
@@ -20,8 +23,6 @@ export async function seedDimSprintWithDeps() {
 
   const sprintWeeks = getSprintWeekNumbers(weeksOnYear);
 
-  console.info(LABEL_CHALKED, sprintWeeks);
-
   const promises = sprintWeeks.map(async ({ first, last }, idx) => {
     return DimSprintOperations.createWithDeps({
       number: idx + 1,
@@ -31,10 +32,8 @@ export async function seedDimSprintWithDeps() {
     });
   });
 
-  console.info(LABEL_CHALKED, `${promises.length} promises created.`);
-
   return Promise.all(promises)
-    .then(() => {
+    .then((s) => {
       const duration = performance.measure("p", "start").duration;
       const milis = moment(duration).format("SSS");
 
@@ -42,31 +41,22 @@ export async function seedDimSprintWithDeps() {
       console.info(LABEL_CHALKED, `Finished in ${milis} ms.`);
     })
     .catch(() => {
-      console.error(`${TIMER_LABEL} Process finished with error!`);
+      console.error(
+        LABEL_CHALKED,
+        `${TIMER_LABEL} Process finished with error!`
+      );
     });
 }
 
-/* TODO
-  - [ ] add FIRST_WORK_WEEK 
-  - [ ] fix sprint ends on next year (sprintsOnYear non integer)
-*/
-
-const SPRINT_LENGTH = 2;
-
-const getSprintWeekNumbers = (
-  weeksOnYear: number
-): Array<{
-  first: number;
-  last: number;
-}> => {
-  const sprintsOnYear = weeksOnYear / SPRINT_LENGTH;
-
-  return Array.from({ length: sprintsOnYear }, (_, idx) => {
-    const offset = idx * SPRINT_LENGTH;
-
-    return {
-      first: offset + 1,
-      last: offset + SPRINT_LENGTH,
-    };
-  });
-};
+/**
+ * Logger
+ *
+ * ::init
+ * - name: node:getFile -> parent:actual (seed:dim-sprint)
+ * - color: chalk.gray
+ *
+ * ::methods
+ * - start: mark(start) + info
+ * - end: measure(p, start) + info
+ * - error: info
+ */

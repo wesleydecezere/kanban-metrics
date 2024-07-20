@@ -1,1 +1,1 @@
-import "./mockPrisma.js";
+import "./mockPrisma";

@@ -1,8 +1,3 @@
-/* TODO
-  - [ ] add FIRST_WORK_WEEK 
-  - [ ] fix sprint ends on next year (sprintsOnYear non integer)
-*/
-
 const SPRINT_LENGTH = 2;
 
 export const getSprintWeekNumbers = (

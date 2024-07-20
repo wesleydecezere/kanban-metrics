@@ -5,12 +5,6 @@ import chalk from "chalk";
 import { performance } from "perf_hooks";
 import { getSprintWeekNumbers } from "./util.js";
 
-/* TODO
- - [x] remove debug logs after add tests
- - [ ] substituir moments.js -> date-fns? (nodejs-toolbox)
- - [ ] create logger class to handle process time measurement and logs
-  */
-
 const TIMER_LABEL = "seed:dimSprintWithDeps";
 const LABEL_CHALKED = chalk.gray(TIMER_LABEL);
 
@@ -33,7 +27,7 @@ export async function seedDimSprintWithDeps() {
   });
 
   return Promise.all(promises)
-    .then((s) => {
+    .then(() => {
       const duration = performance.measure("p", "start").duration;
       const milis = moment(duration).format("SSS");
 
@@ -47,16 +41,3 @@ export async function seedDimSprintWithDeps() {
       );
     });
 }
-
-/**
- * Logger
- *
- * ::init
- * - name: node:getFile -> parent:actual (seed:dim-sprint)
- * - color: chalk.gray
- *
- * ::methods
- * - start: mark(start) + info
- * - end: measure(p, start) + info
- * - error: info
- */

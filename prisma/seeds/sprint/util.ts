@@ -1,19 +1,25 @@
-const SPRINT_LENGTH = 2;
+import { SPRINT_WEEK_LENGHT } from "../../../resource/sprint.config";
 
 export const getSprintWeekNumbers = (
-  weeksOnYear: number
+  weeksOnYear: number,
+  breakWeeks: number[] | undefined
 ): Array<{
   first: number;
   last: number;
 }> => {
-  const sprintsOnYear = weeksOnYear / SPRINT_LENGTH;
+  const weekNumbers = Array.from({ length: weeksOnYear }, (_, idx) => idx + 1);
+  const workWeekNumbers = weekNumbers
+    .filter((week) => !breakWeeks?.includes(week))
+    .sort((a, b) => a - b);
+
+  const sprintsOnYear = workWeekNumbers.length / SPRINT_WEEK_LENGHT;
 
   return Array.from({ length: sprintsOnYear }, (_, idx) => {
-    const offset = idx * SPRINT_LENGTH;
+    const offset = idx * SPRINT_WEEK_LENGHT;
 
     return {
-      first: offset + 1,
-      last: offset + SPRINT_LENGTH,
+      first: workWeekNumbers[offset],
+      last: workWeekNumbers[offset + SPRINT_WEEK_LENGHT - 1],
     };
   });
 };

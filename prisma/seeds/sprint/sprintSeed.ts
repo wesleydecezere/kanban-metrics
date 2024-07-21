@@ -1,7 +1,7 @@
 import moment from "moment";
 import { SprintOperations } from "../../operations/SprintOperations.js";
 import chalk from "chalk";
-
+import { BREAK_WEEKS_BY_YEAR } from "../../../resource/sprint.config.js";
 import { performance } from "perf_hooks";
 import { getSprintWeekNumbers } from "./util.js";
 
@@ -15,7 +15,10 @@ export async function seedSprintWithDeps() {
   performance.mark("start");
   console.info(LABEL_CHALKED, `Starting process.`);
 
-  const sprintWeeks = getSprintWeekNumbers(weeksOnYear);
+  const sprintWeeks = getSprintWeekNumbers(
+    weeksOnYear,
+    BREAK_WEEKS_BY_YEAR[year]
+  );
 
   const promises = sprintWeeks.map(async ({ first, last }, idx) => {
     return SprintOperations.createWithDeps({

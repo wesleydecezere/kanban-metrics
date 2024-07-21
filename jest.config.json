@@ -9,5 +9,6 @@
   },
   "testMatch": ["**/*.test.ts"],
   "transformIgnorePatterns": ["<rootDir>/node_modules/?!chalk"],
-  "setupFilesAfterEnv": ["<rootDir>/test/index.ts"]
+  "setupFilesAfterEnv": ["<rootDir>/test/index.ts"],
+  "verbose": true
 }

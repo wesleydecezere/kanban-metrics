@@ -4,161 +4,243 @@ import * as sprintConfig from "../../../resource/sprint.config";
 describe("getSprintWeekNumbers", () => {
   it.each([52, 53])(
     "when the year has %d weeks, the sprint has a length of 2 weeks and there are no break weeks, it should return the starting and ending week numbers correctly",
-    (weeksOnYear: number) => {
+    (weeksInYear: number) => {
+      let year: number;
+
+      if (weeksInYear === 52) {
+        year = 2031;
+      } else {
+        year = 2032;
+      }
+
       jest.replaceProperty(sprintConfig, "SPRINT_WEEK_LENGHT", 2);
       jest.replaceProperty(sprintConfig, "BREAK_WEEKS_BY_YEAR", {});
 
-      const result = getSprintWeekNumbers(
-        weeksOnYear,
-        sprintConfig.BREAK_WEEKS_BY_YEAR[2025]
-      );
+      const result = getSprintWeekNumbers(year);
 
-      expect(result).toHaveLength(26);
       expect(result).toEqual([
-        { first: 1, last: 2 },
-        { first: 3, last: 4 },
-        { first: 5, last: 6 },
-        { first: 7, last: 8 },
-        { first: 9, last: 10 },
-        { first: 11, last: 12 },
-        { first: 13, last: 14 },
-        { first: 15, last: 16 },
-        { first: 17, last: 18 },
-        { first: 19, last: 20 },
-        { first: 21, last: 22 },
-        { first: 23, last: 24 },
-        { first: 25, last: 26 },
-        { first: 27, last: 28 },
-        { first: 29, last: 30 },
-        { first: 31, last: 32 },
-        { first: 33, last: 34 },
-        { first: 35, last: 36 },
-        { first: 37, last: 38 },
-        { first: 39, last: 40 },
-        { first: 41, last: 42 },
-        { first: 43, last: 44 },
-        { first: 45, last: 46 },
-        { first: 47, last: 48 },
-        { first: 49, last: 50 },
-        { first: 51, last: 52 },
+        { firstWeek: 1, lastWeek: 2 },
+        { firstWeek: 3, lastWeek: 4 },
+        { firstWeek: 5, lastWeek: 6 },
+        { firstWeek: 7, lastWeek: 8 },
+        { firstWeek: 9, lastWeek: 10 },
+        { firstWeek: 11, lastWeek: 12 },
+        { firstWeek: 13, lastWeek: 14 },
+        { firstWeek: 15, lastWeek: 16 },
+        { firstWeek: 17, lastWeek: 18 },
+        { firstWeek: 19, lastWeek: 20 },
+        { firstWeek: 21, lastWeek: 22 },
+        { firstWeek: 23, lastWeek: 24 },
+        { firstWeek: 25, lastWeek: 26 },
+        { firstWeek: 27, lastWeek: 28 },
+        { firstWeek: 29, lastWeek: 30 },
+        { firstWeek: 31, lastWeek: 32 },
+        { firstWeek: 33, lastWeek: 34 },
+        { firstWeek: 35, lastWeek: 36 },
+        { firstWeek: 37, lastWeek: 38 },
+        { firstWeek: 39, lastWeek: 40 },
+        { firstWeek: 41, lastWeek: 42 },
+        { firstWeek: 43, lastWeek: 44 },
+        { firstWeek: 45, lastWeek: 46 },
+        { firstWeek: 47, lastWeek: 48 },
+        { firstWeek: 49, lastWeek: 50 },
+        { firstWeek: 51, lastWeek: 52 },
       ]);
     }
   );
 
   it.each([52, 53])(
     "when the year has %d weeks, the sprint has a length of 3 weeks and there are no break weeks, it should return the starting and ending week numbers correctly",
-    (weeksOnYear: number) => {
+    (weeksInYear) => {
+      let year: number;
+
+      if (weeksInYear === 52) {
+        year = 2031;
+      } else {
+        year = 2032;
+      }
+
       jest.replaceProperty(sprintConfig, "SPRINT_WEEK_LENGHT", 3);
       jest.replaceProperty(sprintConfig, "BREAK_WEEKS_BY_YEAR", { 2025: [] });
 
-      const result = getSprintWeekNumbers(
-        weeksOnYear,
-        sprintConfig.BREAK_WEEKS_BY_YEAR[2025]
-      );
+      const result = getSprintWeekNumbers(year);
 
-      expect(result).toHaveLength(17);
       expect(result).toEqual([
-        { first: 1, last: 3 },
-        { first: 4, last: 6 },
-        { first: 7, last: 9 },
-        { first: 10, last: 12 },
-        { first: 13, last: 15 },
-        { first: 16, last: 18 },
-        { first: 19, last: 21 },
-        { first: 22, last: 24 },
-        { first: 25, last: 27 },
-        { first: 28, last: 30 },
-        { first: 31, last: 33 },
-        { first: 34, last: 36 },
-        { first: 37, last: 39 },
-        { first: 40, last: 42 },
-        { first: 43, last: 45 },
-        { first: 46, last: 48 },
-        { first: 49, last: 51 },
+        { firstWeek: 1, lastWeek: 3 },
+        { firstWeek: 4, lastWeek: 6 },
+        { firstWeek: 7, lastWeek: 9 },
+        { firstWeek: 10, lastWeek: 12 },
+        { firstWeek: 13, lastWeek: 15 },
+        { firstWeek: 16, lastWeek: 18 },
+        { firstWeek: 19, lastWeek: 21 },
+        { firstWeek: 22, lastWeek: 24 },
+        { firstWeek: 25, lastWeek: 27 },
+        { firstWeek: 28, lastWeek: 30 },
+        { firstWeek: 31, lastWeek: 33 },
+        { firstWeek: 34, lastWeek: 36 },
+        { firstWeek: 37, lastWeek: 39 },
+        { firstWeek: 40, lastWeek: 42 },
+        { firstWeek: 43, lastWeek: 45 },
+        { firstWeek: 46, lastWeek: 48 },
+        { firstWeek: 49, lastWeek: 51 },
       ]);
     }
   );
 
-  it("when the year has 52 weeks, the sprint has a length of 2 weeks and there are some break weeks, it should return the starting and ending week numbers correctly", () => {
-    const weeksOnYear = 52;
+  it("when the year has 52 weeks, the sprint has a length of 2 weeks and there are some break weeks on current year, it should return the starting and ending week numbers correctly", () => {
+    const year = 2031;
+
     jest.replaceProperty(sprintConfig, "SPRINT_WEEK_LENGHT", 2);
     jest.replaceProperty(sprintConfig, "BREAK_WEEKS_BY_YEAR", {
-      2025: [1, 15, weeksOnYear],
+      [year]: [1, 15, 52],
     });
 
-    const result = getSprintWeekNumbers(
-      weeksOnYear,
-      sprintConfig.BREAK_WEEKS_BY_YEAR[2025]
-    );
+    const result = getSprintWeekNumbers(year);
 
-    expect(result).toHaveLength(24);
     expect(result).toEqual([
-      { first: 2, last: 3 },
-      { first: 4, last: 5 },
-      { first: 6, last: 7 },
-      { first: 8, last: 9 },
-      { first: 10, last: 11 },
-      { first: 12, last: 13 },
-      { first: 14, last: 16 },
-      { first: 17, last: 18 },
-      { first: 19, last: 20 },
-      { first: 21, last: 22 },
-      { first: 23, last: 24 },
-      { first: 25, last: 26 },
-      { first: 27, last: 28 },
-      { first: 29, last: 30 },
-      { first: 31, last: 32 },
-      { first: 33, last: 34 },
-      { first: 35, last: 36 },
-      { first: 37, last: 38 },
-      { first: 39, last: 40 },
-      { first: 41, last: 42 },
-      { first: 43, last: 44 },
-      { first: 45, last: 46 },
-      { first: 47, last: 48 },
-      { first: 49, last: 50 },
+      { firstWeek: 2, lastWeek: 3 },
+      { firstWeek: 4, lastWeek: 5 },
+      { firstWeek: 6, lastWeek: 7 },
+      { firstWeek: 8, lastWeek: 9 },
+      { firstWeek: 10, lastWeek: 11 },
+      { firstWeek: 12, lastWeek: 13 },
+      { firstWeek: 14, lastWeek: 16 },
+      { firstWeek: 17, lastWeek: 18 },
+      { firstWeek: 19, lastWeek: 20 },
+      { firstWeek: 21, lastWeek: 22 },
+      { firstWeek: 23, lastWeek: 24 },
+      { firstWeek: 25, lastWeek: 26 },
+      { firstWeek: 27, lastWeek: 28 },
+      { firstWeek: 29, lastWeek: 30 },
+      { firstWeek: 31, lastWeek: 32 },
+      { firstWeek: 33, lastWeek: 34 },
+      { firstWeek: 35, lastWeek: 36 },
+      { firstWeek: 37, lastWeek: 38 },
+      { firstWeek: 39, lastWeek: 40 },
+      { firstWeek: 41, lastWeek: 42 },
+      { firstWeek: 43, lastWeek: 44 },
+      { firstWeek: 45, lastWeek: 46 },
+      { firstWeek: 47, lastWeek: 48 },
+      { firstWeek: 49, lastWeek: 50 },
     ]);
   });
 
-  it("when the year has 53 weeks, the sprint has a length of 2 weeks and there are some break weeks, it should return the starting and ending week numbers correctly", () => {
-    const weeksOnYear = 53;
+  it("when the year has 53 weeks, the sprint has a length of 2 weeks and there are some break weeks on current year, it should return the starting and ending week numbers correctly", () => {
+    const year = 2032;
+
     jest.replaceProperty(sprintConfig, "SPRINT_WEEK_LENGHT", 2);
     jest.replaceProperty(sprintConfig, "BREAK_WEEKS_BY_YEAR", {
-      2025: [1, 15, weeksOnYear],
+      [year]: [1, 15, 53],
     });
 
-    const result = getSprintWeekNumbers(
-      weeksOnYear,
-      sprintConfig.BREAK_WEEKS_BY_YEAR[2025]
-    );
+    const result = getSprintWeekNumbers(year);
 
-    expect(result).toHaveLength(25);
     expect(result).toEqual([
-      { first: 2, last: 3 },
-      { first: 4, last: 5 },
-      { first: 6, last: 7 },
-      { first: 8, last: 9 },
-      { first: 10, last: 11 },
-      { first: 12, last: 13 },
-      { first: 14, last: 16 },
-      { first: 17, last: 18 },
-      { first: 19, last: 20 },
-      { first: 21, last: 22 },
-      { first: 23, last: 24 },
-      { first: 25, last: 26 },
-      { first: 27, last: 28 },
-      { first: 29, last: 30 },
-      { first: 31, last: 32 },
-      { first: 33, last: 34 },
-      { first: 35, last: 36 },
-      { first: 37, last: 38 },
-      { first: 39, last: 40 },
-      { first: 41, last: 42 },
-      { first: 43, last: 44 },
-      { first: 45, last: 46 },
-      { first: 47, last: 48 },
-      { first: 49, last: 50 },
-      { first: 51, last: 52 },
+      { firstWeek: 2, lastWeek: 3 },
+      { firstWeek: 4, lastWeek: 5 },
+      { firstWeek: 6, lastWeek: 7 },
+      { firstWeek: 8, lastWeek: 9 },
+      { firstWeek: 10, lastWeek: 11 },
+      { firstWeek: 12, lastWeek: 13 },
+      { firstWeek: 14, lastWeek: 16 },
+      { firstWeek: 17, lastWeek: 18 },
+      { firstWeek: 19, lastWeek: 20 },
+      { firstWeek: 21, lastWeek: 22 },
+      { firstWeek: 23, lastWeek: 24 },
+      { firstWeek: 25, lastWeek: 26 },
+      { firstWeek: 27, lastWeek: 28 },
+      { firstWeek: 29, lastWeek: 30 },
+      { firstWeek: 31, lastWeek: 32 },
+      { firstWeek: 33, lastWeek: 34 },
+      { firstWeek: 35, lastWeek: 36 },
+      { firstWeek: 37, lastWeek: 38 },
+      { firstWeek: 39, lastWeek: 40 },
+      { firstWeek: 41, lastWeek: 42 },
+      { firstWeek: 43, lastWeek: 44 },
+      { firstWeek: 45, lastWeek: 46 },
+      { firstWeek: 47, lastWeek: 48 },
+      { firstWeek: 49, lastWeek: 50 },
+      { firstWeek: 51, lastWeek: 52 },
+    ]);
+  });
+
+  it("when the year has 52 weeks, the sprint has a length of 2 weeks and there are some break weeks on next year, it should return the starting and ending week numbers correctly", () => {
+    const year = 2031;
+
+    jest.replaceProperty(sprintConfig, "SPRINT_WEEK_LENGHT", 2);
+    jest.replaceProperty(sprintConfig, "BREAK_WEEKS_BY_YEAR", {
+      [year]: [1, 15, 52],
+      [year + 1]: [1],
+    });
+
+    const result = getSprintWeekNumbers(year);
+
+    expect(result).toEqual([
+      { firstWeek: 2, lastWeek: 3 },
+      { firstWeek: 4, lastWeek: 5 },
+      { firstWeek: 6, lastWeek: 7 },
+      { firstWeek: 8, lastWeek: 9 },
+      { firstWeek: 10, lastWeek: 11 },
+      { firstWeek: 12, lastWeek: 13 },
+      { firstWeek: 14, lastWeek: 16 },
+      { firstWeek: 17, lastWeek: 18 },
+      { firstWeek: 19, lastWeek: 20 },
+      { firstWeek: 21, lastWeek: 22 },
+      { firstWeek: 23, lastWeek: 24 },
+      { firstWeek: 25, lastWeek: 26 },
+      { firstWeek: 27, lastWeek: 28 },
+      { firstWeek: 29, lastWeek: 30 },
+      { firstWeek: 31, lastWeek: 32 },
+      { firstWeek: 33, lastWeek: 34 },
+      { firstWeek: 35, lastWeek: 36 },
+      { firstWeek: 37, lastWeek: 38 },
+      { firstWeek: 39, lastWeek: 40 },
+      { firstWeek: 41, lastWeek: 42 },
+      { firstWeek: 43, lastWeek: 44 },
+      { firstWeek: 45, lastWeek: 46 },
+      { firstWeek: 47, lastWeek: 48 },
+      { firstWeek: 49, lastWeek: 50 },
+      { firstWeek: 51, lastWeek: 2, isBetweenYears: true },
+    ]);
+  });
+
+  it("when the year has 53 weeks, the sprint has a length of 2 weeks and there are some break weeks on next year, it should return the starting and ending week numbers correctly", () => {
+    const year = 2032;
+
+    jest.replaceProperty(sprintConfig, "SPRINT_WEEK_LENGHT", 2);
+    jest.replaceProperty(sprintConfig, "BREAK_WEEKS_BY_YEAR", {
+      [year]: [1, 15, 53],
+      [year + 1]: [1],
+    });
+
+    const result = getSprintWeekNumbers(year);
+
+    expect(result).toEqual([
+      { firstWeek: 2, lastWeek: 3 },
+      { firstWeek: 4, lastWeek: 5 },
+      { firstWeek: 6, lastWeek: 7 },
+      { firstWeek: 8, lastWeek: 9 },
+      { firstWeek: 10, lastWeek: 11 },
+      { firstWeek: 12, lastWeek: 13 },
+      { firstWeek: 14, lastWeek: 16 },
+      { firstWeek: 17, lastWeek: 18 },
+      { firstWeek: 19, lastWeek: 20 },
+      { firstWeek: 21, lastWeek: 22 },
+      { firstWeek: 23, lastWeek: 24 },
+      { firstWeek: 25, lastWeek: 26 },
+      { firstWeek: 27, lastWeek: 28 },
+      { firstWeek: 29, lastWeek: 30 },
+      { firstWeek: 31, lastWeek: 32 },
+      { firstWeek: 33, lastWeek: 34 },
+      { firstWeek: 35, lastWeek: 36 },
+      { firstWeek: 37, lastWeek: 38 },
+      { firstWeek: 39, lastWeek: 40 },
+      { firstWeek: 41, lastWeek: 42 },
+      { firstWeek: 43, lastWeek: 44 },
+      { firstWeek: 45, lastWeek: 46 },
+      { firstWeek: 47, lastWeek: 48 },
+      { firstWeek: 49, lastWeek: 50 },
+      { firstWeek: 51, lastWeek: 52 },
     ]);
   });
 });

@@ -18,7 +18,11 @@ describe("seedSprintWithDeps", () => {
   jest
     .spyOn(util, "getSprintWeekNumbers")
     .mockReturnValue([
-      { first: sprintFirstWeekNumber, last: sprintLastWeekNumber },
+      {
+        firstWeek: sprintFirstWeekNumber,
+        lastWeek: sprintLastWeekNumber,
+        isBetweenYears: false,
+      },
     ]);
 
   mockPrisma.sprint.create.mockResolvedValue({

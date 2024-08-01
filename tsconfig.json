@@ -1,5 +1,4 @@
 {
-  // prisma doesnt like esm (https://github.com/prisma/prisma/issues/5030)
   "extends": "@tsconfig/node20/tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
@@ -10,6 +9,6 @@
     "node_modules",
     "prisma",
     "dist",
-    "src/generated/graphql/types.ts" // TODO fix ignore generated
+    "src/generated/graphql/types.ts"
   ]
 }

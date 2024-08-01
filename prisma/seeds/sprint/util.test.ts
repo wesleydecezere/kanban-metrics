@@ -1,9 +1,9 @@
 import { getSprintWeekNumbers } from "./util";
 import * as sprintConfig from "../../../resource/sprint.config";
 
-describe("getSprintWeekNumbers", () => {
+describe("getSprintWeekNumbers - should return the starting and ending week numbers correctly", () => {
   it.each([52, 53])(
-    "when the year has %d weeks, the sprint has a length of 2 weeks and there are no break weeks, it should return the starting and ending week numbers correctly",
+    "when the year has %d weeks, the sprint has a length of 2 weeks and there are no break weeks",
     (weeksInYear: number) => {
       let year: number;
 
@@ -50,7 +50,7 @@ describe("getSprintWeekNumbers", () => {
   );
 
   it.each([52, 53])(
-    "when the year has %d weeks, the sprint has a length of 3 weeks and there are no break weeks, it should return the starting and ending week numbers correctly",
+    "when the year has %d weeks, the sprint has a length of 3 weeks and there are no break weeks",
     (weeksInYear) => {
       let year: number;
 
@@ -87,7 +87,7 @@ describe("getSprintWeekNumbers", () => {
     }
   );
 
-  it("when the year has 52 weeks, the sprint has a length of 2 weeks and there are some break weeks on current year, it should return the starting and ending week numbers correctly", () => {
+  it("when the year has 52 weeks, the sprint has a length of 2 weeks and there are some break weeks on current year", () => {
     const year = 2031;
 
     jest.replaceProperty(sprintConfig, "SPRINT_WEEK_LENGHT", 2);
@@ -125,7 +125,7 @@ describe("getSprintWeekNumbers", () => {
     ]);
   });
 
-  it("when the year has 53 weeks, the sprint has a length of 2 weeks and there are some break weeks on current year, it should return the starting and ending week numbers correctly", () => {
+  it("when the year has 53 weeks, the sprint has a length of 2 weeks and there are some break weeks on current year", () => {
     const year = 2032;
 
     jest.replaceProperty(sprintConfig, "SPRINT_WEEK_LENGHT", 2);
@@ -164,7 +164,7 @@ describe("getSprintWeekNumbers", () => {
     ]);
   });
 
-  it("when the year has 52 weeks, the sprint has a length of 2 weeks and there are some break weeks on next year, it should return the starting and ending week numbers correctly", () => {
+  it("when the year has 52 weeks, the sprint has a length of 2 weeks and there are some break weeks on next year", () => {
     const year = 2031;
 
     jest.replaceProperty(sprintConfig, "SPRINT_WEEK_LENGHT", 2);
@@ -204,7 +204,7 @@ describe("getSprintWeekNumbers", () => {
     ]);
   });
 
-  it("when the year has 53 weeks, the sprint has a length of 2 weeks and there are some break weeks on next year, it should return the starting and ending week numbers correctly", () => {
+  it("when the year has 53 weeks, the sprint has a length of 2 weeks and there are some break weeks on next year", () => {
     const year = 2032;
 
     jest.replaceProperty(sprintConfig, "SPRINT_WEEK_LENGHT", 2);

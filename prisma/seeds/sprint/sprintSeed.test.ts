@@ -1,9 +1,9 @@
 import { jest } from "@jest/globals";
-import { seedDimSprintWithDeps } from "./dimSprintSeed";
+import { seedSprintWithDeps } from "./sprintSeed";
 import { mockPrisma } from "../../../test/mockPrisma";
 import * as util from "./util";
 
-describe("seedDimSprintWithDeps", () => {
+describe("seedSprintWithDeps", () => {
   const mockDate = new Date("2025-07-15");
   const mockYear = mockDate.getUTCFullYear();
   const mockFirstWeekStartDate = new Date("2024-12-29");
@@ -21,7 +21,7 @@ describe("seedDimSprintWithDeps", () => {
       { first: sprintFirstWeekNumber, last: sprintLastWeekNumber },
     ]);
 
-  mockPrisma.dimSprint.create.mockResolvedValue({
+  mockPrisma.sprint.create.mockResolvedValue({
     id: 1,
     number: 1,
     endWeekId: 1,
@@ -29,10 +29,10 @@ describe("seedDimSprintWithDeps", () => {
   });
 
   it("should call prisma client with the right parameters", async () => {
-    await seedDimSprintWithDeps();
+    await seedSprintWithDeps();
 
-    expect(mockPrisma.dimSprint.create).toHaveBeenCalledTimes(1);
-    expect(mockPrisma.dimSprint.create).toHaveBeenCalledWith({
+    expect(mockPrisma.sprint.create).toHaveBeenCalledTimes(1);
+    expect(mockPrisma.sprint.create).toHaveBeenCalledWith({
       data: {
         number: 1,
         startWeek: {

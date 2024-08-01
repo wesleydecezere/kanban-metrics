@@ -1,7 +1,7 @@
 import moment from "moment";
 import { prisma } from "../client/client";
 
-export class DimSprintOperations {
+export class SprintOperations {
   static async createWithDeps(props: {
     number: number;
     year: number;
@@ -13,7 +13,7 @@ export class DimSprintOperations {
     const firstWeekMoment = moment.utc().year(year).week(firstWeek);
     const lastWeekMoment = moment.utc().year(year).week(lastWeek);
 
-    return prisma.dimSprint.create({
+    return prisma.sprint.create({
       data: {
         startWeek: {
           create: {

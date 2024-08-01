@@ -1,14 +1,14 @@
 import moment from "moment";
-import { DimSprintOperations } from "../../operations/DimSprintOperations.js";
+import { SprintOperations } from "../../operations/SprintOperations.js";
 import chalk from "chalk";
 
 import { performance } from "perf_hooks";
 import { getSprintWeekNumbers } from "./util.js";
 
-const TIMER_LABEL = "seed:dimSprintWithDeps";
+const TIMER_LABEL = "seed:sprintWithDeps";
 const LABEL_CHALKED = chalk.gray(TIMER_LABEL);
 
-export async function seedDimSprintWithDeps() {
+export async function seedSprintWithDeps() {
   const year = moment.utc().year();
   const weeksOnYear = moment.utc().isoWeeksInYear();
 
@@ -18,7 +18,7 @@ export async function seedDimSprintWithDeps() {
   const sprintWeeks = getSprintWeekNumbers(weeksOnYear);
 
   const promises = sprintWeeks.map(async ({ first, last }, idx) => {
-    return DimSprintOperations.createWithDeps({
+    return SprintOperations.createWithDeps({
       number: idx + 1,
       year,
       firstWeek: first,

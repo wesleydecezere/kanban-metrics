@@ -10,18 +10,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model DimSprint {
+model Sprint {
   @@unique([startWeekId, endWeekId])
   id Int @id @default(autoincrement())
   number Int
   startWeekId Int 
   endWeekId Int
 
-  startWeek DimYearWeek @relation(name: "StartYearWeek", fields: [startWeekId], references: [id])
-  endWeek DimYearWeek @relation(name: "EndYearWeek", fields: [endWeekId], references: [id])
+  startWeek YearWeek @relation(name: "StartYearWeek", fields: [startWeekId], references: [id])
+  endWeek YearWeek @relation(name: "EndYearWeek", fields: [endWeekId], references: [id])
+	@@map("Sprint")
 }
 
-model DimYearWeek {
+model YearWeek {
   @@unique([year, week])
   id Int @id @default(autoincrement())
   year Int
@@ -31,12 +32,13 @@ model DimYearWeek {
 
   breakWeeks BreakWeek[] 
 
-  startSprints DimSprint[] @relation("StartYearWeek")
-  endSprints DimSprint[] @relation("EndYearWeek")
+  startSprints Sprint[] @relation("StartYearWeek")
+  endSprints Sprint[] @relation("EndYearWeek")
+	@@map("YearWeek")
 }
 
 model BreakWeek {
   id Int @id
 
-  DimYearWeek DimYearWeek @relation(fields: [id], references: [id])
+  YearWeek YearWeek @relation(fields: [id], references: [id])
 }

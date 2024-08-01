@@ -143,3 +143,5 @@ src/generated/
 .flaskenv*
 !.env.project
 !.env.vault
+
+*.todo

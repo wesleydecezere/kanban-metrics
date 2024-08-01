@@ -25,15 +25,12 @@ model DimYearWeek {
   @@unique([year, week])
   id Int @id @default(autoincrement())
   year Int
-  week Int // until 53
+  week Int
   start DateTime @db.Date
   end DateTime @db.Date
 
   breakWeeks BreakWeek[] 
 
-  // https://www.prisma.io/docs/orm/prisma-schema/data-model/relations#disambiguating-relations
-  // https://github.com/prisma/prisma/discussions/8857 ~ virtual relation
-  // https://github.com/prisma/prisma/discussions/21244 ~ why ignore doesnt work
   startSprints DimSprint[] @relation("StartYearWeek")
   endSprints DimSprint[] @relation("EndYearWeek")
 }

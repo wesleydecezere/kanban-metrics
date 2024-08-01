@@ -1,5 +1,5 @@
 import { jest } from "@jest/globals";
-import { seedDimSprintWithDeps } from "./dimSprintSeed"; // pega prisma original
+import { seedDimSprintWithDeps } from "./dimSprintSeed";
 import { mockPrisma } from "../../../test/mockPrisma";
 import * as util from "./util";
 

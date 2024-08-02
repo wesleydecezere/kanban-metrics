@@ -30,15 +30,7 @@ model YearWeek {
   start DateTime @db.Date
   end DateTime @db.Date
 
-  breakWeeks BreakWeek[] 
-
   startSprints Sprint[] @relation("StartYearWeek")
   endSprints Sprint[] @relation("EndYearWeek")
 	@@map("YearWeek")
-}
-
-model BreakWeek {
-  id Int @id
-
-  YearWeek YearWeek @relation(fields: [id], references: [id])
 }

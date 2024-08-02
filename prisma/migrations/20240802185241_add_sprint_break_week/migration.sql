@@ -19,13 +19,6 @@ CREATE TABLE "YearWeek" (
     CONSTRAINT "YearWeek_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
-CREATE TABLE "BreakWeek" (
-    "id" INTEGER NOT NULL,
-
-    CONSTRAINT "BreakWeek_pkey" PRIMARY KEY ("id")
-);
-
 -- CreateIndex
 CREATE UNIQUE INDEX "Sprint_startWeekId_endWeekId_key" ON "Sprint"("startWeekId", "endWeekId");
 
@@ -37,6 +30,3 @@ ALTER TABLE "Sprint" ADD CONSTRAINT "Sprint_startWeekId_fkey" FOREIGN KEY ("star
 
 -- AddForeignKey
 ALTER TABLE "Sprint" ADD CONSTRAINT "Sprint_endWeekId_fkey" FOREIGN KEY ("endWeekId") REFERENCES "YearWeek"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "BreakWeek" ADD CONSTRAINT "BreakWeek_id_fkey" FOREIGN KEY ("id") REFERENCES "YearWeek"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

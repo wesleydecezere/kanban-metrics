@@ -1,5 +1,5 @@
 import moment from "moment";
-import { seedSprintWithDeps } from "./dim-sprint/sprintSeed.js";
+import { seedSprintWithDeps } from "./sprint/sprintSeed.js";
 import { prisma } from "../client/client.js";
 
 moment.locale("pt-br", {

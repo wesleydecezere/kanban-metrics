@@ -4,6 +4,7 @@ import {
   SPRINT_WEEK_LENGHT,
 } from "../../../resource/sprint.config";
 import { getRange } from "../../../util/array.util";
+import { BreakWeekOperation } from "../../operations/BreakWeekOperation";
 
 type SprintWeekNumber = {
   firstWeek: number;
@@ -11,27 +12,32 @@ type SprintWeekNumber = {
   isBetweenYears?: boolean;
 };
 
-export const getSprintWeekNumbers = (year: number): Array<SprintWeekNumber> => {
+/**
+ * Query break weeks because it will be seed via API
+ */
+export const getSprintWeekNumbers = async (
+  year: number
+): Promise<Array<SprintWeekNumber>> => {
   const nextYear = year + 1;
 
-  const { sprints, hasMissingWeeks } = getSprintsInYear(year);
+  const { sprints, hasMissingWeeks } = await getSprintsInYear(year);
 
   if (hasMissingWeeks && hasBreakWeek(nextYear))
-    return [...sprints, getSprintBetweenYears(nextYear, sprints.last())];
+    return [...sprints, await getSprintBetweenYears(nextYear, sprints.last())];
 
   return sprints;
 };
 
-const getSprintsInYear = (
+const getSprintsInYear = async (
   year: number
-): { sprints: Array<SprintWeekNumber>; hasMissingWeeks: boolean } => {
+): Promise<{ sprints: Array<SprintWeekNumber>; hasMissingWeeks: boolean }> => {
   const weeks = getWeeksInYear(year);
-  const breakWeeks = BREAK_WEEKS_BY_YEAR[year] ?? [];
+  const breakWeeks = (await BreakWeekOperation.getByYear(year)) ?? [];
 
   const hasMissingWeeks = (weeks - breakWeeks.length) % SPRINT_WEEK_LENGHT > 0;
 
   const sprints = getRange({ start: 1, end: weeks })
-    .remove(BREAK_WEEKS_BY_YEAR[year])
+    .remove(breakWeeks)
     .partition(SPRINT_WEEK_LENGHT)
     .filter((part) => part.length === SPRINT_WEEK_LENGHT)
     .map(
@@ -47,12 +53,12 @@ const getSprintsInYear = (
   };
 };
 
-const getSprintBetweenYears = (
+const getSprintBetweenYears = async (
   nextYear: number,
   lastSprintInCurrentYear: SprintWeekNumber
-): SprintWeekNumber => {
+): Promise<SprintWeekNumber> => {
   const weeksInNextYear = getWeeksInYear(nextYear);
-  const breakWeeksInNextYear = BREAK_WEEKS_BY_YEAR[nextYear];
+  const breakWeeksInNextYear = await BreakWeekOperation.getByYear(nextYear);
 
   const firstWorkWeekInNextYear = getRange({
     start: 1,

@@ -1,6 +1,7 @@
 import moment from "moment";
 import { seedSprintWithDeps } from "./sprint/sprintSeed.js";
 import { prisma } from "../client/client.js";
+import { seedBreakWeek } from "./breakWeek/breakWeekSeed.js";
 
 moment.locale("pt-br", {
   week: {
@@ -9,6 +10,7 @@ moment.locale("pt-br", {
 });
 
 async function main() {
+  await seedBreakWeek();
   await seedSprintWithDeps();
 }
 

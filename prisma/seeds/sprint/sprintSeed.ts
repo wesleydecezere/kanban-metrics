@@ -13,7 +13,7 @@ export async function seedSprintWithDeps() {
 
   const year = moment().utc().year();
 
-  const sprintWeeks = getSprintWeekNumbers(year);
+  const sprintWeeks = await getSprintWeekNumbers(year);
 
   const promises = sprintWeeks.map(
     async ({ firstWeek, lastWeek, isBetweenYears }, idx) => {

@@ -34,3 +34,10 @@ model YearWeek {
   endSprints Sprint[] @relation("EndYearWeek")
 	@@map("YearWeek")
 }
+
+model BreakWeek {
+  @@unique([year, week])
+  id Int @id @default(autoincrement())
+  year Int
+  week Int
+}

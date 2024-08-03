@@ -2,31 +2,31 @@ import {
   ApolloClient,
   HttpLink,
   InMemoryCache,
-  NormalizedCacheObject,
+  type NormalizedCacheObject,
   from,
-} from "@apollo/client/core";
-import { onError } from "@apollo/client/link/error";
+} from "@apollo/client/core"
+import { onError } from "@apollo/client/link/error"
 
-import fetch from "node-fetch";
+import fetch from "node-fetch"
 
 export class GithubApolloClient extends ApolloClient<NormalizedCacheObject> {
-  private static _instance: ApolloClient<NormalizedCacheObject>;
+  private static _instance: ApolloClient<NormalizedCacheObject>
 
   static get instance(): ApolloClient<NormalizedCacheObject> {
-    if (!this._instance) {
-      this._instance = new this();
+    if (!GithubApolloClient._instance) {
+      GithubApolloClient._instance = new GithubApolloClient()
     }
 
-    return this._instance;
+    return GithubApolloClient._instance
   }
 
   private constructor() {
-    const token = process.env.GITHUB_TOKEN;
+    const token = process.env.GITHUB_TOKEN
 
     if (!token) {
       throw new Error(
-        "You need to provide a Github personal access token as `GITHUB_TOKEN` env variable. See README for more info."
-      );
+        "You need to provide a Github personal access token as `GITHUB_TOKEN` env variable. See README for more info.",
+      )
     }
 
     super({
@@ -37,17 +37,17 @@ export class GithubApolloClient extends ApolloClient<NormalizedCacheObject> {
         },
       },
       cache: new InMemoryCache(),
-    });
+    })
   }
 }
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
-    graphQLErrors.forEach(({ message }) =>
+    for (const { message } of graphQLErrors) {
       console.log(`[GraphQL error]: ${message}`)
-    );
-  if (networkError) console.error(`[Network error]: ${networkError}`);
-});
+    }
+  if (networkError) console.error(`[Network error]: ${networkError}`)
+})
 
 const httpLink = (token: string) =>
   new HttpLink({
@@ -57,4 +57,4 @@ const httpLink = (token: string) =>
       "X-GitHub-Api-Version": "2022-11-28",
     },
     fetch,
-  });
+  })

@@ -1,18 +1,18 @@
-import moment from "moment";
-import { prisma } from "../client/client";
+import moment from "moment"
+import { prisma } from "../client/client"
 
 export class SprintOperations {
   static async createWithDeps(props: {
-    number: number;
-    firstWeek: number;
-    lastWeek: number;
-    firstWeekYear: number;
-    lastWeekYear: number;
+    number: number
+    firstWeek: number
+    lastWeek: number
+    firstWeekYear: number
+    lastWeekYear: number
   }) {
-    const { number, firstWeek, lastWeek, firstWeekYear, lastWeekYear } = props;
+    const { number, firstWeek, lastWeek, firstWeekYear, lastWeekYear } = props
 
-    const firstWeekMoment = moment.utc().year(firstWeekYear).week(firstWeek);
-    const lastWeekMoment = moment.utc().year(lastWeekYear).week(lastWeek);
+    const firstWeekMoment = moment.utc().year(firstWeekYear).week(firstWeek)
+    const lastWeekMoment = moment.utc().year(lastWeekYear).week(lastWeek)
 
     return prisma.sprint.create({
       data: {
@@ -34,6 +34,6 @@ export class SprintOperations {
         },
         number,
       },
-    });
+    })
   }
 }

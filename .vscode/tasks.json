@@ -9,7 +9,7 @@
         "runOn": "folderOpen"
       },
       "presentation": {
-        "reveal": "always",
+        "reveal": "silent",
         "panel": "shared"
       }
     }

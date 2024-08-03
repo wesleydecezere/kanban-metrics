@@ -1,5 +1,5 @@
-import { Prisma } from "@prisma/client";
-import chalk from "chalk";
+import type { Prisma } from "@prisma/client"
+import chalk from "chalk"
 
 export const logDefinitions: Prisma.LogDefinition[] = [
   {
@@ -18,16 +18,16 @@ export const logDefinitions: Prisma.LogDefinition[] = [
     emit: "stdout",
     level: "warn",
   },
-];
+]
 
 export const queryLogger = ({ query, duration }: Prisma.QueryEvent) => {
-  if (!query.startsWith("INSERT")) return;
+  if (!query.startsWith("INSERT")) return
 
   const relation = query.match(/INTO "public"\."(?<relation>.*)" \(/)?.groups
-    ?.relation;
+    ?.relation
 
   console.log(
-    chalk.magenta(`prisma:query`),
-    `Insert into ${chalk.bold(relation)} (${duration} ms)`
-  );
-};
+    chalk.magenta("prisma:query"),
+    `Insert into ${chalk.bold(relation)} (${duration} ms)`,
+  )
+}

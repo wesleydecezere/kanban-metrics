@@ -1,20 +1,20 @@
-import { BREAK_WEEKS_BY_YEAR } from "../../../resource/sprint.config";
+import { BREAK_WEEKS_BY_YEAR } from "../../../resource/sprint.config"
 import {
-  BreakWeekInput,
+  type BreakWeekInput,
   BreakWeekOperation,
-} from "../../operations/BreakWeekOperation";
+} from "../../operations/BreakWeekOperation"
 
 export function seedBreakWeek() {
-  const batch: BreakWeekInput[] = [];
+  const batch: BreakWeekInput[] = []
 
-  Object.entries(BREAK_WEEKS_BY_YEAR).forEach(([year, weeks]) => {
-    weeks.forEach((week) => {
+  for (const [year, weeks] of Object.entries(BREAK_WEEKS_BY_YEAR)) {
+    for (const week of weeks) {
       batch.push({
-        year: parseInt(year),
+        year: Number.parseInt(year),
         week: week,
-      });
-    });
-  });
+      })
+    }
+  }
 
-  return BreakWeekOperation.createMany(batch);
+  return BreakWeekOperation.createMany(batch)
 }

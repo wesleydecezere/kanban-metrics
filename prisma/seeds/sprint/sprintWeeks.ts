@@ -33,8 +33,6 @@ const getSprintsInYear = async (
 
   const hasMissingWeeks = (weeks - breakWeeks.length) % SPRINT_WEEK_LENGHT > 0
 
-  console.log("weeks", weeks)
-
   const sprints = getRange({ start: 1, end: weeks })
     .remove(breakWeeks)
     .partition(SPRINT_WEEK_LENGHT)

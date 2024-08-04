@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
 import moment from "moment"
-=======
-import { getMoment } from "../../util/date"
->>>>>>> Stashed changes
 import { prisma } from "../client/client"
 
 export class SprintOperations {

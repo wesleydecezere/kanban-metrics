@@ -47,13 +47,15 @@ export function getRange({ start, end, length }: GetRangeProps): number[] {
   const hasEnd = end !== undefined
   const hasLength = length !== undefined
 
-  if ((hasEnd && hasLength) || (!hasEnd && !hasLength)) return []
-
-  if (hasEnd) {
-    return Array.from({ length: end! - start + 1 }, (_, i) => start + i)
+  if (hasEnd && !hasLength) {
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i)
   }
 
-  return Array.from({ length: length! }, (_, i) => start + i)
+  if (hasLength && !hasEnd) {
+    return Array.from({ length }, (_, i) => start + i)
+  }
+
+  return []
 }
 
 function partition<T>(array: T[], size: number): T[][] {

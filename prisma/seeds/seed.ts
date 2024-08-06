@@ -1,7 +1,7 @@
 import moment from "moment"
-import { seedSprintWithDeps } from "./sprint/sprintSeed.js"
 import { prisma } from "../client/client.js"
 import { seedBreakWeek } from "./breakWeek/breakWeekSeed.js"
+import { seedSprintWithDeps } from "./sprint/sprintSeed.js"
 
 moment.locale("pt-br", {
   week: {

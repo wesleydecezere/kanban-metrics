@@ -13,7 +13,7 @@ type SprintWeekNumber = {
 }
 
 /**
- * Query break weeks because it will be seed via API
+ * Query break weeks because it will be seeded via API
  */
 export const getSprintWeekNumbers = async (
   year: number,

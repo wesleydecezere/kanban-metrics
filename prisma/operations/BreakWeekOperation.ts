@@ -7,7 +7,6 @@ export class BreakWeekOperation {
   static async createMany(data: BreakWeekInput[]) {
     return prisma.breakWeek.createMany({ data })
   }
-
   static async getByYear(year: number) {
     return prisma.breakWeek
       .findMany({

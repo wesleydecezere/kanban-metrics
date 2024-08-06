@@ -12,6 +12,12 @@ declare global {
     sortDesc(): T[]
     first(): T
     last(): T
+    concatNotNull(...args: (T | null)[]): T[]
+    /**
+     * Partition an array into smaller arrays.
+     * @param size The size of each partition.
+     * @returns An array of partitions.
+     */
     partition(size: number): T[][]
   }
 }
@@ -37,6 +43,13 @@ Array.prototype.first = function <T>(this: T[]): T {
 
 Array.prototype.last = function <T>(this: T[]): T {
   return this[this.length - 1]
+}
+
+Array.prototype.concatNotNull = function <T>(
+  this: T[],
+  ...args: (T | null)[]
+): T[] {
+  return this.concat(args.filter(Boolean) as T[])
 }
 
 Array.prototype.partition = function <T>(this: T[], size: number): T[][] {

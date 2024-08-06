@@ -1,6 +1,6 @@
-import moment from "moment"
-import { BREAK_WEEKS_BY_YEAR, SPRINT_WEEK_LENGHT } from "../../../config/sprint"
+import { SPRINT_WEEK_LENGHT } from "../../../config/sprint"
 import { getRange } from "../../../util/array"
+import { getWeeksInYear } from "../../../util/date.util"
 import { BreakWeekOperation } from "../../operations/BreakWeekOperation"
 
 type SprintWeekNumber = {
@@ -9,32 +9,29 @@ type SprintWeekNumber = {
   isBetweenYears?: boolean
 }
 
-/**
- * Query break weeks because it will be seeded via API
- */
+// query break weeks because it will be seeded via API
 export const getSprintWeekNumbers = async (
   year: number,
 ): Promise<Array<SprintWeekNumber>> => {
-  const nextYear = year + 1
-
   const { sprints, hasMissingWeeks } = await getSprintsInYear(year)
+  if (!hasMissingWeeks) return sprints
 
-  if (hasMissingWeeks && hasBreakWeek(nextYear))
-    return [...sprints, await getSprintBetweenYears(nextYear, sprints.last())]
-
-  return sprints
+  const sprintBetweenYears = await getSprintBetweenYears(
+    year + 1,
+    sprints.last(),
+  )
+  return sprints.concatNotNull(sprintBetweenYears)
 }
 
 const getSprintsInYear = async (
   year: number,
 ): Promise<{ sprints: Array<SprintWeekNumber>; hasMissingWeeks: boolean }> => {
   const weeks = getWeeksInYear(year)
-  const breakWeeks = (await BreakWeekOperation.getByYear(year)) ?? []
+  const breakWeeks = await BreakWeekOperation.getByYear(year)
+  const workWeeks = getRange({ start: 1, end: weeks }).remove(breakWeeks)
 
-  const hasMissingWeeks = (weeks - breakWeeks.length) % SPRINT_WEEK_LENGHT > 0
-
-  const sprints = getRange({ start: 1, end: weeks })
-    .remove(breakWeeks)
+  const hasMissingWeeks = workWeeks.length % SPRINT_WEEK_LENGHT > 0
+  const sprints = workWeeks
     .partition(SPRINT_WEEK_LENGHT)
     .filter(part => part.length === SPRINT_WEEK_LENGHT)
     .map(
@@ -45,30 +42,30 @@ const getSprintsInYear = async (
     )
 
   return {
-    sprints,
     hasMissingWeeks,
+    sprints,
   }
 }
 
 const getSprintBetweenYears = async (
   nextYear: number,
   lastSprintInCurrentYear: SprintWeekNumber,
-): Promise<SprintWeekNumber> => {
+): Promise<SprintWeekNumber | null> => {
   const weeksInNextYear = getWeeksInYear(nextYear)
   const breakWeeksInNextYear = await BreakWeekOperation.getByYear(nextYear)
 
+  if (breakWeeksInNextYear.length === 0) return null
+
   const firstWorkWeekInNextYear = getRange({
     start: 1,
-    length: weeksInNextYear,
-  }).find(week => !breakWeeksInNextYear.includes(week))
+    end: weeksInNextYear,
+  })
+    .remove(breakWeeksInNextYear)
+    .first()
 
   return {
     firstWeek: lastSprintInCurrentYear.lastWeek + 1,
-    lastWeek: firstWorkWeekInNextYear!,
+    lastWeek: firstWorkWeekInNextYear,
     isBetweenYears: true,
   }
 }
-
-const hasBreakWeek = (year: number) => BREAK_WEEKS_BY_YEAR[year]?.length > 0
-const getWeeksInYear = (year: number) =>
-  moment.utc().year(year).isoWeeksInYear()

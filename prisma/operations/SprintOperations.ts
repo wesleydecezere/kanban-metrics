@@ -1,4 +1,4 @@
-import moment from "moment"
+import { getMoment } from "../../util/date"
 import { prisma } from "../client/client"
 
 export class SprintOperations {
@@ -11,8 +11,8 @@ export class SprintOperations {
   }) {
     const { number, firstWeek, lastWeek, firstWeekYear, lastWeekYear } = props
 
-    const firstWeekMoment = moment.utc().year(firstWeekYear).week(firstWeek)
-    const lastWeekMoment = moment.utc().year(lastWeekYear).week(lastWeek)
+    const firstWeekMoment = getMoment(firstWeekYear, firstWeek)
+    const lastWeekMoment = getMoment(firstWeekYear, lastWeek)
 
     return prisma.sprint.create({
       data: {

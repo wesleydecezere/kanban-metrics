@@ -1,6 +1,5 @@
 import chalk from "chalk"
 import moment from "moment"
-import { performance } from "node:perf_hooks"
 import { SprintOperations } from "../../operations/SprintOperations.js"
 import { getSprintWeekNumbers } from "./sprintWeeks.js"
 

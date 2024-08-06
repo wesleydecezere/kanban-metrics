@@ -1,4 +1,4 @@
-import { BREAK_WEEKS_BY_YEAR } from "../../../resource/sprint.config"
+import { BREAK_WEEKS_BY_YEAR } from "../../../config/sprint"
 import {
   type BreakWeekInput,
   BreakWeekOperation,

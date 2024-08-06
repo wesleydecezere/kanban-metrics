@@ -1,7 +1,7 @@
 import { jest } from "@jest/globals"
 import { mockPrisma } from "../../../test/mockPrisma"
-import { seedSprintWithDeps } from "./sprintSeed"
-import * as util from "./util"
+import { seedSprintWithDeps } from "./sprint"
+import * as sprintWeek from "./sprintWeeks"
 
 describe("seedSprintWithDeps - should call prisma client with the right parameters", () => {
   const mockDate = new Date("2025-07-15")
@@ -23,7 +23,7 @@ describe("seedSprintWithDeps - should call prisma client with the right paramete
     const sprintFirstWeekNumber = 1
     const sprintLastWeekNumber = 2
 
-    jest.spyOn(util, "getSprintWeekNumbers").mockResolvedValue([
+    jest.spyOn(sprintWeek, "getSprintWeekNumbers").mockResolvedValue([
       {
         firstWeek: sprintFirstWeekNumber,
         lastWeek: sprintLastWeekNumber,
@@ -65,7 +65,7 @@ describe("seedSprintWithDeps - should call prisma client with the right paramete
     const sprintFirstWeekNumber = 52
     const sprintLastWeekNumber = 1
 
-    jest.spyOn(util, "getSprintWeekNumbers").mockResolvedValue([
+    jest.spyOn(sprintWeek, "getSprintWeekNumbers").mockResolvedValue([
       {
         firstWeek: sprintFirstWeekNumber,
         lastWeek: sprintLastWeekNumber,

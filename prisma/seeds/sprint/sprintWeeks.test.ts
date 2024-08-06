@@ -1,5 +1,5 @@
-import * as sprintConfig from "../../../resource/sprint.config"
-import { getSprintWeekNumbers } from "./util"
+import * as sprintConfig from "../../../config/sprint"
+import { getSprintWeekNumbers } from "./sprintWeeks"
 
 describe("getSprintWeekNumbers - should return the starting and ending week numbers correctly", () => {
   it.each([52, 53])(

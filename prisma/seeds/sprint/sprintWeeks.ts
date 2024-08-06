@@ -1,9 +1,6 @@
 import moment from "moment"
-import {
-  BREAK_WEEKS_BY_YEAR,
-  SPRINT_WEEK_LENGHT,
-} from "../../../resource/sprint.config"
-import { getRange } from "../../../util/array.util"
+import { BREAK_WEEKS_BY_YEAR, SPRINT_WEEK_LENGHT } from "../../../config/sprint"
+import { getRange } from "../../../util/array"
 import { BreakWeekOperation } from "../../operations/BreakWeekOperation"
 
 type SprintWeekNumber = {

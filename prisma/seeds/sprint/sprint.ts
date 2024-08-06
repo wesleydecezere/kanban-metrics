@@ -1,8 +1,8 @@
-import moment from "moment"
-import { SprintOperations } from "../../operations/SprintOperations.js"
 import chalk from "chalk"
+import moment from "moment"
 import { performance } from "node:perf_hooks"
-import { getSprintWeekNumbers } from "./util.js"
+import { SprintOperations } from "../../operations/SprintOperations.js"
+import { getSprintWeekNumbers } from "./sprintWeeks.js"
 
 const TIMER_LABEL = "seed:sprintWithDeps"
 const LABEL_CHALKED = chalk.gray(TIMER_LABEL)

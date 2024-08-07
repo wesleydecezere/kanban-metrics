@@ -6,13 +6,16 @@ import * as sprintWeek from "./sprintWeeks"
 describe("seedSprintWithDeps - should call prisma client with the right parameters", () => {
   const mockDate = new Date("2025-07-15")
   const mockYear = mockDate.getUTCFullYear()
-  jest.useFakeTimers().setSystemTime(mockDate)
 
-  mockPrisma.sprint.create.mockResolvedValue({
-    id: 1,
-    number: 1,
-    endWeekId: 1,
-    startWeekId: 2,
+  beforeEach(() => {
+    jest.resetAllMocks()
+    jest.useFakeTimers().setSystemTime(mockDate)
+    mockPrisma.sprint.create.mockResolvedValue({
+      id: 1,
+      number: 1,
+      endWeekId: 1,
+      startWeekId: 2,
+    })
   })
 
   it("sprint weeks in same year", async () => {

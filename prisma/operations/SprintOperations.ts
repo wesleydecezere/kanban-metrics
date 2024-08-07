@@ -12,7 +12,7 @@ export class SprintOperations {
     const { number, firstWeek, lastWeek, firstWeekYear, lastWeekYear } = props
 
     const firstWeekMoment = getMoment(firstWeekYear, firstWeek)
-    const lastWeekMoment = getMoment(firstWeekYear, lastWeek)
+    const lastWeekMoment = getMoment(lastWeekYear, lastWeek)
 
     return prisma.sprint.create({
       data: {

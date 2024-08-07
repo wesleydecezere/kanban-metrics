@@ -22,8 +22,7 @@ export class ProcessLogger {
   error(error?: Error) {
     console.error(
       this.label,
-      `${this.label} Process finished with error!`,
-      error?.message,
+      `${this.label} Process finished with error: "${error?.message}"`,
     )
   }
 }

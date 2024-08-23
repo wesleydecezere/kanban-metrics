@@ -11,6 +11,24 @@ datasource db {
 }
 
 model Sprint {
-    id Int @id @default(autoincrement())
-    name String
+  @@unique([startWeekId, endWeekId])
+  id Int @id @default(autoincrement())
+  number Int
+  startWeekId Int 
+  endWeekId Int
+
+  startWeek YearWeek @relation(name: "StartYearWeek", fields: [startWeekId], references: [id])
+  endWeek YearWeek @relation(name: "EndYearWeek", fields: [endWeekId], references: [id])
+}
+
+model YearWeek {
+  @@unique([year, week])
+  id Int @id @default(autoincrement())
+  year Int
+  week Int
+  start DateTime @db.Date
+  end DateTime @db.Date
+
+  startSprints Sprint[] @relation("StartYearWeek")
+  endSprints Sprint[] @relation("EndYearWeek")
 }

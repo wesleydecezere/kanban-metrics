@@ -19,7 +19,6 @@ model Sprint {
 
   startWeek YearWeek @relation(name: "StartYearWeek", fields: [startWeekId], references: [id])
   endWeek YearWeek @relation(name: "EndYearWeek", fields: [endWeekId], references: [id])
-	@@map("Sprint")
 }
 
 model YearWeek {
@@ -32,7 +31,6 @@ model YearWeek {
 
   startSprints Sprint[] @relation("StartYearWeek")
   endSprints Sprint[] @relation("EndYearWeek")
-	@@map("YearWeek")
 }
 
 model BreakWeek {

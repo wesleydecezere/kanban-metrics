@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { apolloRoutes } from "./apollo";
-import { octokitRoutes } from "./octokit";
+import { apolloRoutes } from "./apollo.js";
+import { octokitRoutes } from "./octokit.js";
 
 export const githubRoutes = Router();
 

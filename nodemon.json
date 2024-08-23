@@ -1,5 +1,9 @@
 {
+  "exec": "yarn codegen && yarn start:tsx",
+  "ext": "ts,graphql,json",
+  "watch": ["src/**"],
   "events": {
-    "start": "clear"
+    "start": "clear",
+    "restart": "clear"
   }
 }

@@ -1,3 +1,0 @@
-# used by https://marketplace.visualstudio.com/items?itemName=orsenkucher.vscode-graphql
-schema: node_modules/@octokit/graphql-schema/schema.json
-documentes: ./**/*.graphql

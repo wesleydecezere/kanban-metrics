@@ -1,22 +1,22 @@
 import { Router } from "express";
-import { GithubApolloClient } from "../../github-client/GithubApolloClient";
+import { GithubApolloClient } from "../../github-client/GithubApolloClient.js";
 import {
-  BoardIssues,
+  BoardIssuesDocument,
   BoardIssuesQuery,
   BoardIssuesQueryVariables,
-  LastIssues,
+  LastIssuesDocument,
   LastIssuesQuery,
   LastIssuesQueryVariables,
-} from "../../generated/graphql";
+} from "../../graphql/generated/types.js";
 
 export const apolloRoutes = Router();
 
 apolloRoutes.get("/issues-recent", async (req, res) => {
-  const result = await new GithubApolloClient().query<
+  const result = await GithubApolloClient.instance.query<
     LastIssuesQuery,
     LastIssuesQueryVariables
   >({
-    query: LastIssues,
+    query: LastIssuesDocument,
     variables: {
       repo: "pec",
       owner: "laboratoriobridge",
@@ -27,11 +27,11 @@ apolloRoutes.get("/issues-recent", async (req, res) => {
 });
 
 apolloRoutes.get("/issues-board", async (req, res) => {
-  const result = await new GithubApolloClient().query<
+  const result = await GithubApolloClient.instance.query<
     BoardIssuesQuery,
     BoardIssuesQueryVariables
   >({
-    query: BoardIssues,
+    query: BoardIssuesDocument,
   });
 
   res.send(result);

@@ -1,0 +1,22 @@
+query FieldValueByFieldNodeId($id: ID!) {
+  node(id: $id) {
+    ... on ProjectV2Field {
+      field: name
+    }
+    ... on ProjectV2ItemFieldTextValue {
+      text
+    }
+    ... on ProjectV2ItemFieldSingleSelectValue {
+      name
+    }
+    ... on ProjectV2ItemFieldNumberValue {
+      number
+    }
+    ... on ProjectV2ItemFieldIterationValue {
+      title # deveria ser definido por mutation
+    }
+    ... on ProjectV2ItemFieldDateValue {
+      date
+    }
+  }
+}

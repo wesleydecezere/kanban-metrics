@@ -34,5 +34,5 @@ apolloRoutes.get("/issues-board", async (req, res) => {
     query: BoardIssuesDocument,
   });
 
-  res.send(result);
+  res.send(result.data.organization?.projectV2?.items.issues?.[0]?.labels);
 });

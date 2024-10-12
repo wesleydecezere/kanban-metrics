@@ -1,6 +1,6 @@
 {
   "schema": "node_modules/@octokit/graphql-schema/schema.json",
-  "documents": "./**/*.graphql",
+  "documents": "./**/*.gql",
   "extensions": {
     "codegen": {
       "generates": {

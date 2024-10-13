@@ -8,9 +8,8 @@
           "plugins": [
             "typescript",
             "typescript-resolvers",
-            "typescript-document-nodes",
-            "typed-document-node",
-            "typescript-operations"
+            "typescript-operations",
+            "typed-document-node"
           ]
         }
       }

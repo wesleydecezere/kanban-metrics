@@ -1,4 +1,4 @@
-import { Label, ProjectsV2ItemCreatedEvent, ProjectsV2ItemEditedEvent, ProjectsV2ItemEvent, WebhookEvent } from "@octokit/webhooks-types";
+import { Label, ProjectsV2ItemConvertedEvent, ProjectsV2ItemCreatedEvent, ProjectsV2ItemEditedEvent, ProjectsV2ItemEvent, WebhookEvent } from "@octokit/webhooks-types";
 
 type ProjectsV2ItemFieldValueChanges = ProjectsV2ItemEditedEvent['changes']['field_value']
 type ProjectsV2ItemCustomFieldValueChanges = ProjectsV2ItemFieldValueChanges & {
@@ -29,4 +29,8 @@ export function isProjectsV2ItemEditedEvent(event: WebhookEvent): event is Proje
 
 export function isProjectsV2ItemCustomFieldValueChanges(changes: ProjectsV2ItemFieldValueChanges): changes is ProjectsV2ItemCustomFieldValueChanges {
   return (changes as ProjectsV2ItemCustomFieldValueChanges).to !== undefined;
+}
+
+export function isProjectsV2ItemConvertedEvent(event: WebhookEvent): event is ProjectsV2ItemConvertedEvent {
+  return isProjectsV2ItemEvent(event) && (event as ProjectsV2ItemConvertedEvent).action === "converted";
 }

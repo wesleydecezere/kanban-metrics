@@ -1,4 +1,4 @@
-import { ProjectsV2ItemCreatedEvent, ProjectsV2ItemEditedEvent } from "@octokit/webhooks-types"
+import { ProjectsV2ItemConvertedEvent, ProjectsV2ItemCreatedEvent, ProjectsV2ItemEditedEvent } from "@octokit/webhooks-types"
 import { IssueByProjectV2ItemNodeIdQuery, IssueByProjectV2ItemNodeIdQueryVariables, IssueByProjectV2ItemNodeIdDocument } from "../../../graphql/generated/types.js"
 import { GithubApolloClient } from "../../../github-client/GithubApolloClient.js"
 import { FieldValueByFieldNodeIdQuery, FieldValueByFieldNodeIdQueryVariables, FieldValueByFieldNodeIdDocument } from "../../../graphql/generated/types.js"
@@ -29,8 +29,8 @@ export async function handleProjectsV2ItemCreated(event: ProjectsV2ItemCreatedEv
     }
 }
 
-export async function handleProjectsV2ItemEditedEvent(webhookEvent: ProjectsV2ItemEditedEvent) {
-    const fieldValueChanges = webhookEvent.changes.field_value
+export async function handleProjectsV2ItemEditedEvent(event: ProjectsV2ItemEditedEvent) {
+    const fieldValueChanges = event.changes.field_value
 
     if (isProjectsV2ItemCustomFieldValueChanges(fieldValueChanges)) {
         const { field_name, from, to } = fieldValueChanges
@@ -57,4 +57,8 @@ export async function handleProjectsV2ItemEditedEvent(webhookEvent: ProjectsV2It
     data.node?.__typename === 'ProjectV2ItemFieldNumberValue' && console.log(`Edited field ${data.node.number}`)
     data.node?.__typename === 'ProjectV2ItemFieldIterationValue' && console.log(`Edited field ${data.node.title}`)
     data.node?.__typename === 'ProjectV2ItemFieldDateValue' && console.log(`Edited field ${data.node.date}`)
+}
+
+export function handleProjectsV2ItemConvertedEvent(event: ProjectsV2ItemConvertedEvent) {
+    // TODO
 }

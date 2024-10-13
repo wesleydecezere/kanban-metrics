@@ -1,9 +1,9 @@
 import { WebhookEvent } from "@octokit/webhooks-types";
 import { Router } from "express";
-import { isProjectsV2ItemCreatedEvent, isProjectsV2ItemEditedEvent, isProjectsV2ItemEvent } from "../../model/webhook/webhook.js";
+import { isProjectsV2ItemCreatedEvent, isProjectsV2ItemEditedEvent, isProjectsV2ItemEvent, isProjectsV2ItemConvertedEvent } from "../../model/webhook/webhook.js";
 import { isIssuesEditedEvent, isIssuesEvent, isIssuesLabeledEvent } from "../../model/webhook/issues.js";
 import {handleIssuesEditedEvent, handleIssuesLabeledEvent} from "./service/issues.js";
-import {handleProjectsV2ItemCreated, handleProjectsV2ItemEditedEvent} from "./service/projectsV2.js";
+import {handleProjectsV2ItemCreated, handleProjectsV2ItemEditedEvent, handleProjectsV2ItemConvertedEvent} from "./service/projectsV2.js";
 
 export const webhookRoutes = Router();
 
@@ -16,7 +16,7 @@ webhookRoutes.post("/",  handlePostRoot)
 
 // @ts-expect-error - TS7006: Parameter 'req' implicitly has an 'any' type.
 export function handlePostRoot(req, res) {
-    console.log('[POST] /webhook', req.body)
+    console.log('[POST] /webhook')
 
     const webhookEvent = (req.body as WebhookEvent)
 
@@ -40,8 +40,12 @@ export function handlePostRoot(req, res) {
         return handleProjectsV2ItemCreated(webhookEvent)
     }
 
-    if(isProjectsV2ItemEditedEvent(webhookEvent) && webhookEvent.projects_v2_item.content_type === 'Issue') {
+    if (isProjectsV2ItemEditedEvent(webhookEvent) && webhookEvent.projects_v2_item.content_type === 'Issue') {
         return handleProjectsV2ItemEditedEvent(webhookEvent)
+    }
+
+    if (isProjectsV2ItemConvertedEvent(webhookEvent) && webhookEvent.projects_v2_item.content_type === 'Issue') {   
+        return handleProjectsV2ItemConvertedEvent(webhookEvent)
     }
 
     res.send("/webhook fallback")

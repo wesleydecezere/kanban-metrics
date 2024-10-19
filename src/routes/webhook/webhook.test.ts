@@ -1,6 +1,6 @@
 import { handlePostRoot } from "./webhook.js"
 import * as projectsV2Serice from "./service/projectsV2.js"
-import created from "./payloads/board-issue/created.json"
+import { created } from "./payloads/board-issue/created.js"
 import entered from "./payloads/board-issue/entered.json"
 import edited from "./payloads/board-issue/edited.json"
 import converted from "./payloads/board-issue/converted.json"

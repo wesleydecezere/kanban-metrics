@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { GithubApolloClient } from "../../github-client/GithubApolloClient.js";
+import { GithubApolloClient } from "../../github-gql/GithubApolloClient.js";
 import {
   BoardIssuesDocument,
   BoardIssuesQuery,

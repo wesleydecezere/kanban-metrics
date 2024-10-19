@@ -1,6 +1,6 @@
 import { WebhookEvent } from "@octokit/webhooks-types";
 import { Router } from "express";
-import { isProjectsV2ItemCreatedEvent, isProjectsV2ItemEditedEvent, isProjectsV2ItemEvent, isProjectsV2ItemConvertedEvent } from "../../model/webhook/webhook.js";
+import { isProjectsV2ItemCreatedEvent, isProjectsV2ItemEditedEvent, isProjectsV2ItemEvent, isProjectsV2ItemConvertedEvent } from "../../model/webhook/event.js";
 import { isIssuesEditedEvent, isIssuesEvent, isIssuesLabeledEvent } from "../../model/webhook/issues.js";
 import {handleIssuesEditedEvent, handleIssuesLabeledEvent} from "./service/issues.js";
 import {handleProjectsV2ItemCreated, handleProjectsV2ItemEditedEvent, handleProjectsV2ItemConvertedEvent} from "./service/projectsV2.js";
@@ -47,6 +47,8 @@ export function handlePostRoot(req, res) {
     if (isProjectsV2ItemConvertedEvent(webhookEvent) && webhookEvent.projects_v2_item.content_type === 'Issue') {   
         return handleProjectsV2ItemConvertedEvent(webhookEvent)
     }
+
+    // precisa restored?
 
     res.send("/webhook fallback")
     return

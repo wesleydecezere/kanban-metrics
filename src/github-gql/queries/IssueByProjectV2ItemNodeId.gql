@@ -1,5 +1,5 @@
 query IssueByProjectV2ItemNodeId($id: ID!) {
-  item: node(id: $id) {
+  node(id: $id) {
     ... on ProjectV2Item {
       content {
         ... on Issue {

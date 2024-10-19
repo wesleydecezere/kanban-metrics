@@ -1,4 +1,6 @@
-{
+import { ProjectsV2ItemCreatedEvent } from "@octokit/webhooks-types";
+
+export const created: ProjectsV2ItemCreatedEvent = {
   "action": "created",
   "projects_v2_item": {
     "id": 83180852,

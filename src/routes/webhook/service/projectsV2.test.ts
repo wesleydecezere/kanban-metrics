@@ -1,9 +1,10 @@
 
 import { ProjectsV2ItemCreatedEvent } from "@octokit/webhooks-types";
-import { getIssueByProjectV2ItemNodeId } from "../../../github-gql/command/projectsV2.js"
+import { getIssueByProjectV2ItemNodeId } from "../../../github-gql/command/projectsV2Item.js"
 import { handleProjectsV2ItemCreated } from './projectsV2.js'
 import { created } from '../payloads/board-issue/created.js'
-import * as projectsV2  from "../../../github-gql/command/projectsV2.js"; 
+import * as projectsV2  from "../../../github-gql/command/projectsV2Item.js"; 
+import { mockPrisma } from '../../../../test/mockPrisma.js';
 
 describe('handleProjectsV2ItemCreated', () => {
   const nodeId = created.projects_v2_item.node_id;
@@ -40,12 +41,23 @@ describe('handleProjectsV2ItemCreated', () => {
     expect(getIssueByProjectV2ItemNodeId).toHaveBeenCalledWith(nodeId);
   });
 
-  it('should create a new issue when it is an issue creatin event in project v2', async () => {
+  it('should create a new issue when handling an project v2 issue creation event', async () => {
     const mockIssue = { number: 123, title: 'Mock Issue Title' };
     spyGetIssueByProjectV2ItemNodeId.mockResolvedValue(mockIssue);
+
+    // seria legal não mexer no prisma aqui, só na camada de interface (prisma/operations)
+    mockPrisma.issue.create.mockResolvedValue({
+      id: 1,
+      ...mockIssue
+    });
 
     await handleProjectsV2ItemCreated(created);
 
     expect(getIssueByProjectV2ItemNodeId).toHaveBeenCalledWith(created.projects_v2_item.node_id);
+    expect(mockPrisma.issue.create).toHaveBeenCalledWith({
+      data: {
+        ...mockIssue
+      }
+    })
   });
 });

@@ -2,7 +2,8 @@ import { ProjectsV2ItemConvertedEvent, ProjectsV2ItemCreatedEvent, ProjectsV2Ite
 import { GithubApolloClient } from "../../../github-gql/GithubApolloClient.js"
 import { FieldValueByFieldNodeIdQuery, FieldValueByFieldNodeIdQueryVariables, FieldValueByFieldNodeIdDocument } from "../../../graphql/generated/types.js"
 import { isProjectsV2Issue, isProjectsV2ItemCustomFieldValueChanges } from "../../../model/webhook/projectsV2Item.js"
-import { getIssueByProjectV2ItemNodeId } from "../../../github-gql/command/projectsV2.js"
+import { getIssueByProjectV2ItemNodeId } from "../../../github-gql/command/projectsV2Item.js"
+import { IssueOperations } from "../../../../prisma/operations/IssueOperations.js"
 
 export async function handleProjectsV2ItemCreated({ projects_v2_item }: ProjectsV2ItemCreatedEvent) {
     if (!isProjectsV2Issue(projects_v2_item)) {
@@ -18,7 +19,9 @@ export async function handleProjectsV2ItemCreated({ projects_v2_item }: Projects
         return
     }
 
-    console.log(`Created issue #${issue.number} - ${issue.title}`)
+    const { id } = await IssueOperations.create({ ...issue})
+
+    console.log(`Created issue db record with id ${id}`)
 }
 
 

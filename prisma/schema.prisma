@@ -34,7 +34,7 @@ model YearWeek {
 }
 
 model Issue {
-  id Int @id @default(autoincrement())
+  id String @id
   number Int
   title String
 }

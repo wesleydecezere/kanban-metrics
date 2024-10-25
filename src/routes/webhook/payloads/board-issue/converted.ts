@@ -1,4 +1,6 @@
-{
+import { ProjectsV2ItemConvertedEvent } from "@octokit/webhooks-types";
+
+export const converted: ProjectsV2ItemConvertedEvent = {
     "action": "converted",
     "projects_v2_item": {
       "id": 83146550,

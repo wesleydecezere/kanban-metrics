@@ -1,10 +1,13 @@
+import { ProjectsV2ItemEditedEvent } from "@octokit/webhooks-types";
+
+export const numberFieldEdited: ProjectsV2ItemEditedEvent =
 {
     "action": "edited",
     "projects_v2_item": {
-      "id": 83146550,
-      "node_id": "PVTI_lADOCuv1Ac4ApFNDzgT0tzY",
+      "id": 83146710,
+      "node_id": "PVTI_lADOCuv1Ac4ApFNDzgT0t9Y",
       "project_node_id": "PVT_kwDOCuv1Ac4ApFND",
-      "content_node_id": "I_kwDOM4lqYc6Z76w9",
+      "content_node_id": "I_kwDOM4lqYc6Z78Gu",
       "content_type": "Issue",
       "creator": {
         "login": "wesleydecezere",
@@ -26,16 +29,19 @@
         "type": "User",
         "site_admin": false
       },
-      "created_at": "2024-10-12T06:51:02Z",
-      "updated_at": "2024-10-12T06:55:45Z",
+      "created_at": "2024-10-12T06:59:18Z",
+      "updated_at": "2024-10-12T07:17:36Z",
       "archived_at": null
     },
     "changes": {
       "field_value": {
-        "field_node_id": "PVTF_lADOCuv1Ac4ApFNDzggjDrY",
-        "field_type": "title",
-        "field_name": "Title",
-        "project_number": 1
+        "field_node_id": "PVTF_lADOCuv1Ac4ApFNDzggjDvw",
+        "field_type": "number",
+        // @ts-expect-error TS-2353: Object literal may only specify known properties, and '"field_name"' does not exist in type '{ field_type: "number" | "single_select" | "date" | "text" | "iteration"; field_node_id: string; }'
+        "field_name": "Estimate",
+        "project_number": 1,
+        "from": null,
+        "to": "1"
       }
     },
     "organization": {
@@ -53,22 +59,22 @@
       "description": null
     },
     "sender": {
-      "login": "ghost",
-      "id": 10137,
-      "node_id": "MDQ6VXNlcjEwMTM3",
-      "avatar_url": "https://avatars.githubusercontent.com/u/10137?v=4",
+      "login": "wesleydecezere",
+      "id": 75259871,
+      "node_id": "MDQ6VXNlcjc1MjU5ODcx",
+      "avatar_url": "https://avatars.githubusercontent.com/u/75259871?v=4",
       "gravatar_id": "",
-      "url": "https://api.github.com/users/ghost",
-      "html_url": "https://github.com/ghost",
-      "followers_url": "https://api.github.com/users/ghost/followers",
-      "following_url": "https://api.github.com/users/ghost/following{/other_user}",
-      "gists_url": "https://api.github.com/users/ghost/gists{/gist_id}",
-      "starred_url": "https://api.github.com/users/ghost/starred{/owner}{/repo}",
-      "subscriptions_url": "https://api.github.com/users/ghost/subscriptions",
-      "organizations_url": "https://api.github.com/users/ghost/orgs",
-      "repos_url": "https://api.github.com/users/ghost/repos",
-      "events_url": "https://api.github.com/users/ghost/events{/privacy}",
-      "received_events_url": "https://api.github.com/users/ghost/received_events",
+      "url": "https://api.github.com/users/wesleydecezere",
+      "html_url": "https://github.com/wesleydecezere",
+      "followers_url": "https://api.github.com/users/wesleydecezere/followers",
+      "following_url": "https://api.github.com/users/wesleydecezere/following{/other_user}",
+      "gists_url": "https://api.github.com/users/wesleydecezere/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/wesleydecezere/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/wesleydecezere/subscriptions",
+      "organizations_url": "https://api.github.com/users/wesleydecezere/orgs",
+      "repos_url": "https://api.github.com/users/wesleydecezere/repos",
+      "events_url": "https://api.github.com/users/wesleydecezere/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/wesleydecezere/received_events",
       "type": "User",
       "site_admin": false
     }

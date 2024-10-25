@@ -3,7 +3,7 @@ import { Router } from "express";
 import { isProjectsV2ItemCreatedEvent, isProjectsV2ItemEditedEvent, isProjectsV2ItemEvent, isProjectsV2ItemConvertedEvent } from "../../model/webhook/event.js";
 import { isIssuesEditedEvent, isIssuesEvent, isIssuesLabeledEvent } from "../../model/webhook/issues.js";
 import {handleIssuesEditedEvent, handleIssuesLabeledEvent} from "./service/issues.js";
-import {handleProjectsV2ItemCreated, handleProjectsV2ItemEditedEvent, handleProjectsV2ItemConvertedEvent} from "./service/projectsV2.js";
+import {handleProjectsV2ItemCreated, handleProjectsV2ItemEditedEvent, handleProjectsV2ItemConvertedEvent} from "./service/projectsV2Item/projectsV2Item.js";
 
 export const webhookRoutes = Router();
 

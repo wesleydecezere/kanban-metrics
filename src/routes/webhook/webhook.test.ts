@@ -1,9 +1,9 @@
 import { handlePostRoot } from "./webhook.js"
-import * as projectsV2Serice from "./service/projectsV2.js"
+import * as projectsV2Serice from "./service/projectsV2Item/projectsV2Item.js"
 import { created } from "./payloads/board-issue/created.js"
+import { converted } from "./payloads/board-issue/converted.js"
 import entered from "./payloads/board-issue/entered.json"
-import edited from "./payloads/board-issue/edited.json"
-import converted from "./payloads/board-issue/converted.json"
+import { titleEdited } from "./payloads/board-issue/edited.js"
 
 describe('webhooks', () => {
     let mockResponse: { send: jest.Mock }
@@ -21,8 +21,8 @@ describe('webhooks', () => {
     })
     it('should handle projects v2 item edited event', async () => {
         const spyHandleProjectsV2ItemEditedEvent = jest.spyOn(projectsV2Serice, 'handleProjectsV2ItemEditedEvent').mockImplementation(jest.fn())
-        handlePostRoot({ body: edited }, mockResponse)
-        expect(spyHandleProjectsV2ItemEditedEvent).toHaveBeenCalledWith(edited)
+        handlePostRoot({ body: titleEdited }, mockResponse)
+        expect(spyHandleProjectsV2ItemEditedEvent).toHaveBeenCalledWith(titleEdited)
     })
     it('should handle projects v2 item converted event', async () => {
         const spyHandleProjectsV2ItemConvertedEvent = jest.spyOn(projectsV2Serice, 'handleProjectsV2ItemConvertedEvent').mockImplementation(jest.fn())

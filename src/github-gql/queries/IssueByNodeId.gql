@@ -1,0 +1,8 @@
+query IssueByNodeId($id: ID!) {
+  node(id: $id) {
+    ... on Issue {
+      number
+      title
+    }
+  }
+}

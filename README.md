@@ -15,3 +15,5 @@ Run `psql -h localhost -p 1 -U user -d el-metrics-db` to aceess the database via
 Use `yarn setup` to install the project node version and [nvshim](https://github.com/iamogbz/nvshim?tab=readme-ov-file#installation) to automagically use it on your sheels.
 
 Install [VSCode GraphQL](https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql) extension to validade your `.graphql` files against github schema.
+
+Testing

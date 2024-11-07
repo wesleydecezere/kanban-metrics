@@ -1,38 +1,48 @@
-import { ProjectsV2ItemConvertedEvent, ProjectsV2ItemCreatedEvent, ProjectsV2ItemEditedEvent } from "@octokit/webhooks-types"
-import { isProjectsV2Issue } from "../../../../model/webhook/projectsV2Item.js"
-import { getFieldValueByItemNodeIdAndFieldName, getIssueByNodeId } from "../../../../github-gql/command/projectsV2Item.js"
-import { IssueOperations } from "../../../../../prisma/operations/IssueOperations.js"
+import {
+  ProjectsV2ItemConvertedEvent,
+  ProjectsV2ItemCreatedEvent,
+  ProjectsV2ItemEditedEvent,
+} from "@octokit/webhooks-types";
+import { isProjectsV2Issue } from "../../../../model/webhook/projectsV2Item.js";
+import {
+  getFieldValueByItemNodeIdAndFieldName,
+  getIssueByNodeId,
+} from "../../../../github-gql/command/projectsV2Item.js";
+import { IssueOperations } from "../../../../../prisma/operations/IssueOperations.js";
 
-export async function handleProjectsV2ItemCreated({ projects_v2_item }: ProjectsV2ItemCreatedEvent) {
-    if (!isProjectsV2Issue(projects_v2_item)) {
-        console.log('Projects V2 item created is not an issue')
-        return
-    }
-    await findIssueAndCreateRecord(projects_v2_item.content_node_id)
+export async function handleProjectsV2ItemCreated({
+  projects_v2_item,
+}: ProjectsV2ItemCreatedEvent) {
+  if (!isProjectsV2Issue(projects_v2_item)) {
+    console.log("Projects V2 item created is not an issue");
+    return;
+  }
+  await findIssueAndCreateRecord(projects_v2_item.content_node_id);
 }
 
-
-export async function handleProjectsV2ItemConvertedEvent({ projects_v2_item }: ProjectsV2ItemConvertedEvent) {
-    await findIssueAndCreateRecord(projects_v2_item.content_node_id)
+export async function handleProjectsV2ItemConvertedEvent({
+  projects_v2_item,
+}: ProjectsV2ItemConvertedEvent) {
+  await findIssueAndCreateRecord(projects_v2_item.content_node_id);
 }
 
 async function findIssueAndCreateRecord(nodeId: string) {
-    const issue = await getIssueByNodeId(nodeId)
+  const issue = await getIssueByNodeId(nodeId);
 
-    if (!issue) {
-        console.log('Issue not found on Github')
-        return
-    }
+  if (!issue) {
+    console.log("Issue not found on Github");
+    return;
+  }
 
-    const { id } = await IssueOperations.create({ id: nodeId, ...issue})
+  const { id } = await IssueOperations.create({ id: nodeId, ...issue });
 
-    console.log(`Created issue db record with id ${id}`)
+  console.log(`Created issue db record with id ${id}`);
 }
 
 // -----------------------------------------------------
 
 /**
- * escolher gh query + result type + prisma operation por  
+ * escolher gh query + result type + prisma operation por
  * a. tipo do field
  *    - webhookEvent.changes.field_value.field_type
  *    - pode assumir todos os valores de graphql-schema::ProjectV2FieldType em lowercase)
@@ -48,31 +58,43 @@ async function findIssueAndCreateRecord(nodeId: string) {
 
 // posso criar os campos buscando por todos ProjectV2[]Field no ProjectV2
 
-export async function handleProjectsV2ItemEditedEvent(event: ProjectsV2ItemEditedEvent) {
-    // TODO criar tipo adaptado de graphql-schema::ProjectV2FieldType
-    const fieldType: string = event.changes.field_value.field_type
+export async function handleProjectsV2ItemEditedEvent(
+  event: ProjectsV2ItemEditedEvent
+) {
+  // TODO criar tipo adaptado de graphql-schema::ProjectV2FieldType
+  const fieldType: string = event.changes.field_value.field_type;
 
-    if (fieldType !== 'title') {
-        console.log(`The updated field is not an issue title, its type is ${fieldType}`)
-        return
-    }
+  if (fieldType !== "title") {
+    console.log(
+      `The updated field is not an issue title, its type is ${fieldType}`
+    );
+    return;
+  }
 
-    const fieldValue = await getFieldValueByItemNodeIdAndFieldName(
-        event.projects_v2_item.node_id, 
-        fieldType
-    )
+  const fieldValue = await getFieldValueByItemNodeIdAndFieldName(
+    event.projects_v2_item.node_id,
+    fieldType
+  );
 
-    if (!fieldValue) {
-        console.log('Field value not found')
-        return
-    }
+  if (!fieldValue) {
+    console.log("Field value not found");
+    return;
+  }
 
-    if (fieldValue.__typename !== 'ProjectV2ItemFieldTextValue' || !fieldValue.text) {
-        console.log(`Field value is not a text, its type is ${fieldValue?.__typename}`)
-        return
-    }
+  if (
+    fieldValue.__typename !== "ProjectV2ItemFieldTextValue" ||
+    !fieldValue.text
+  ) {
+    console.log(
+      `Field value is not a text, its type is ${fieldValue?.__typename}`
+    );
+    return;
+  }
 
-    const issue = await IssueOperations.updateTitleById(fieldValue.text, event.projects_v2_item.content_node_id)
+  const issue = await IssueOperations.updateTitleById(
+    fieldValue.text,
+    event.projects_v2_item.content_node_id
+  );
 
-    console.log(`Issue ${issue.id} had title updated to '${issue.title}'`)
+  console.log(`Issue ${issue.id} had title updated to '${issue.title}'`);
 }

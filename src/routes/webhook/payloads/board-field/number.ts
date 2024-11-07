@@ -1,81 +1,90 @@
 import { ProjectsV2ItemEditedEvent } from "@octokit/webhooks-types";
 
-export const numberFieldEdited: ProjectsV2ItemEditedEvent =
-{
-    "action": "edited",
-    "projects_v2_item": {
-      "id": 83146710,
-      "node_id": "PVTI_lADOCuv1Ac4ApFNDzgT0t9Y",
-      "project_node_id": "PVT_kwDOCuv1Ac4ApFND",
-      "content_node_id": "I_kwDOM4lqYc6Z78Gu",
-      "content_type": "Issue",
-      "creator": {
-        "login": "wesleydecezere",
-        "id": 75259871,
-        "node_id": "MDQ6VXNlcjc1MjU5ODcx",
-        "avatar_url": "https://avatars.githubusercontent.com/u/75259871?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/wesleydecezere",
-        "html_url": "https://github.com/wesleydecezere",
-        "followers_url": "https://api.github.com/users/wesleydecezere/followers",
-        "following_url": "https://api.github.com/users/wesleydecezere/following{/other_user}",
-        "gists_url": "https://api.github.com/users/wesleydecezere/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/wesleydecezere/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/wesleydecezere/subscriptions",
-        "organizations_url": "https://api.github.com/users/wesleydecezere/orgs",
-        "repos_url": "https://api.github.com/users/wesleydecezere/repos",
-        "events_url": "https://api.github.com/users/wesleydecezere/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/wesleydecezere/received_events",
-        "type": "User",
-        "site_admin": false
-      },
-      "created_at": "2024-10-12T06:59:18Z",
-      "updated_at": "2024-10-12T07:17:36Z",
-      "archived_at": null
+export const numberFieldEdited: ProjectsV2ItemEditedEvent = {
+  action: "edited",
+  projects_v2_item: {
+    id: 83146710,
+    node_id: "PVTI_lADOCuv1Ac4ApFNDzgT0t9Y",
+    project_node_id: "PVT_kwDOCuv1Ac4ApFND",
+    content_node_id: "I_kwDOM4lqYc6Z78Gu",
+    content_type: "Issue",
+    creator: {
+      login: "wesleydecezere",
+      id: 75259871,
+      node_id: "MDQ6VXNlcjc1MjU5ODcx",
+      avatar_url: "https://avatars.githubusercontent.com/u/75259871?v=4",
+      gravatar_id: "",
+      url: "https://api.github.com/users/wesleydecezere",
+      html_url: "https://github.com/wesleydecezere",
+      followers_url: "https://api.github.com/users/wesleydecezere/followers",
+      following_url:
+        "https://api.github.com/users/wesleydecezere/following{/other_user}",
+      gists_url: "https://api.github.com/users/wesleydecezere/gists{/gist_id}",
+      starred_url:
+        "https://api.github.com/users/wesleydecezere/starred{/owner}{/repo}",
+      subscriptions_url:
+        "https://api.github.com/users/wesleydecezere/subscriptions",
+      organizations_url: "https://api.github.com/users/wesleydecezere/orgs",
+      repos_url: "https://api.github.com/users/wesleydecezere/repos",
+      events_url:
+        "https://api.github.com/users/wesleydecezere/events{/privacy}",
+      received_events_url:
+        "https://api.github.com/users/wesleydecezere/received_events",
+      type: "User",
+      site_admin: false,
     },
-    "changes": {
-      "field_value": {
-        "field_node_id": "PVTF_lADOCuv1Ac4ApFNDzggjDvw",
-        "field_type": "number",
-        // @ts-expect-error TS-2353: Object literal may only specify known properties, and '"field_name"' does not exist in type '{ field_type: "number" | "single_select" | "date" | "text" | "iteration"; field_node_id: string; }'
-        "field_name": "Estimate",
-        "project_number": 1,
-        "from": null,
-        "to": "1"
-      }
+    created_at: "2024-10-12T06:59:18Z",
+    updated_at: "2024-10-12T07:17:36Z",
+    archived_at: null,
+  },
+  changes: {
+    field_value: {
+      field_node_id: "PVTF_lADOCuv1Ac4ApFNDzggjDvw",
+      field_type: "number",
+      // @ts-expect-error TS-2353: Object literal may only specify known properties, and '"field_name"' does not exist in type '{ field_type: "number" | "single_select" | "date" | "text" | "iteration"; field_node_id: string; }'
+      field_name: "Estimate",
+      project_number: 1,
+      from: null,
+      to: "1",
     },
-    "organization": {
-      "login": "decezere",
-      "id": 183235841,
-      "node_id": "O_kgDOCuv1AQ",
-      "url": "https://api.github.com/orgs/decezere",
-      "repos_url": "https://api.github.com/orgs/decezere/repos",
-      "events_url": "https://api.github.com/orgs/decezere/events",
-      "hooks_url": "https://api.github.com/orgs/decezere/hooks",
-      "issues_url": "https://api.github.com/orgs/decezere/issues",
-      "members_url": "https://api.github.com/orgs/decezere/members{/member}",
-      "public_members_url": "https://api.github.com/orgs/decezere/public_members{/member}",
-      "avatar_url": "https://avatars.githubusercontent.com/u/183235841?v=4",
-      "description": null
-    },
-    "sender": {
-      "login": "wesleydecezere",
-      "id": 75259871,
-      "node_id": "MDQ6VXNlcjc1MjU5ODcx",
-      "avatar_url": "https://avatars.githubusercontent.com/u/75259871?v=4",
-      "gravatar_id": "",
-      "url": "https://api.github.com/users/wesleydecezere",
-      "html_url": "https://github.com/wesleydecezere",
-      "followers_url": "https://api.github.com/users/wesleydecezere/followers",
-      "following_url": "https://api.github.com/users/wesleydecezere/following{/other_user}",
-      "gists_url": "https://api.github.com/users/wesleydecezere/gists{/gist_id}",
-      "starred_url": "https://api.github.com/users/wesleydecezere/starred{/owner}{/repo}",
-      "subscriptions_url": "https://api.github.com/users/wesleydecezere/subscriptions",
-      "organizations_url": "https://api.github.com/users/wesleydecezere/orgs",
-      "repos_url": "https://api.github.com/users/wesleydecezere/repos",
-      "events_url": "https://api.github.com/users/wesleydecezere/events{/privacy}",
-      "received_events_url": "https://api.github.com/users/wesleydecezere/received_events",
-      "type": "User",
-      "site_admin": false
-    }
-  }
+  },
+  organization: {
+    login: "decezere",
+    id: 183235841,
+    node_id: "O_kgDOCuv1AQ",
+    url: "https://api.github.com/orgs/decezere",
+    repos_url: "https://api.github.com/orgs/decezere/repos",
+    events_url: "https://api.github.com/orgs/decezere/events",
+    hooks_url: "https://api.github.com/orgs/decezere/hooks",
+    issues_url: "https://api.github.com/orgs/decezere/issues",
+    members_url: "https://api.github.com/orgs/decezere/members{/member}",
+    public_members_url:
+      "https://api.github.com/orgs/decezere/public_members{/member}",
+    avatar_url: "https://avatars.githubusercontent.com/u/183235841?v=4",
+    description: null,
+  },
+  sender: {
+    login: "wesleydecezere",
+    id: 75259871,
+    node_id: "MDQ6VXNlcjc1MjU5ODcx",
+    avatar_url: "https://avatars.githubusercontent.com/u/75259871?v=4",
+    gravatar_id: "",
+    url: "https://api.github.com/users/wesleydecezere",
+    html_url: "https://github.com/wesleydecezere",
+    followers_url: "https://api.github.com/users/wesleydecezere/followers",
+    following_url:
+      "https://api.github.com/users/wesleydecezere/following{/other_user}",
+    gists_url: "https://api.github.com/users/wesleydecezere/gists{/gist_id}",
+    starred_url:
+      "https://api.github.com/users/wesleydecezere/starred{/owner}{/repo}",
+    subscriptions_url:
+      "https://api.github.com/users/wesleydecezere/subscriptions",
+    organizations_url: "https://api.github.com/users/wesleydecezere/orgs",
+    repos_url: "https://api.github.com/users/wesleydecezere/repos",
+    events_url: "https://api.github.com/users/wesleydecezere/events{/privacy}",
+    received_events_url:
+      "https://api.github.com/users/wesleydecezere/received_events",
+    type: "User",
+    site_admin: false,
+  },
+};

@@ -13,12 +13,12 @@ query FieldValueByProjectV2ItemNodeIdAndFieldName($id: ID!, $name: String!) {
           number
         }
         ... on ProjectV2ItemFieldIterationValue {
-          title        
+          title
         }
         ... on ProjectV2ItemFieldDateValue {
           date
         }
       }
     }
-	}
+  }
 }

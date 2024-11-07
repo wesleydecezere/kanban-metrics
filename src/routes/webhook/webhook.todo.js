@@ -1,17 +1,17 @@
 /**
  * eventos de interesse
- * 
- * 
+ *
+ *
  * project_v2_item
  * - criação de issue
  * - conversão para issue (se criação não for chamada por tabela)
  * - edição de qualquer campo
- * 
- * 
+ *
+ *
  * issue (talvez não seja interessante pra algo que roda em cima do board)
  * - criação
  * - edição de título
- * 
+ *
  */
 
 /**
@@ -26,7 +26,7 @@
 */
 
 /**
- * principais: ProjectsV2ItemCreatedEvent, ProjectsV2ItemEditedEvent 
+ * principais: ProjectsV2ItemCreatedEvent, ProjectsV2ItemEditedEvent
  * outros: ProjectsV2ItemArchivedEvent, ProjectsV2ItemReorderedEvent, ProjectsV2ItemConvertedEvent, ProjectsV2ItemRestoredEvent, ProjectsV2ItemDeletedEvent
  */
 /**
@@ -42,7 +42,7 @@
 
 /**
  * mapeamento ação no board x webhook event
- * 
+ *
  * draft->issue: ProjectsV2ItemConvertedEvent
  * novo card issue: ProjectsV2ItemCreatedEvent
  * card issue edited: ProjectsV2ItemEditedEvent + IssesEditedEvent

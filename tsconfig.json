@@ -11,6 +11,6 @@
     "node_modules",
     "prisma",
     "dist",
-    "src/graphql/generated/types.ts"
+    "src/generated/graphql/types.ts"
   ]
 }

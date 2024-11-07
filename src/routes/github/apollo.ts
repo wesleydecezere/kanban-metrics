@@ -7,7 +7,7 @@ import {
   LastIssuesDocument,
   LastIssuesQuery,
   LastIssuesQueryVariables,
-} from "../../graphql/generated/types.js";
+} from "../../generated/graphql/types.js";
 
 export const apolloRoutes = Router();
 

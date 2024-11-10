@@ -1,8 +1,8 @@
 import { ProjectsV2ItemCreatedEvent } from "@octokit/webhooks-types";
-import { getIssueByNodeId } from "../../../../github-gql/command/projectsV2Item.js";
+import { getIssueByNodeId } from "../../../../github-gql/command/projectV2Item.js";
 import { handleProjectsV2ItemCreated } from "./projectsV2Item.js";
 import { created } from "../../payloads/board-issue/created.js";
-import * as projectsV2Item from "../../../../github-gql/command/projectsV2Item.js";
+import * as projectsV2Item from "../../../../github-gql/command/projectV2Item.js";
 import { mockPrisma } from "../../../../../test/mockPrisma.js";
 
 describe("handleProjectsV2ItemCreated", () => {

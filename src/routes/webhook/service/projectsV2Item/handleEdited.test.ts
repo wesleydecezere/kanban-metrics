@@ -1,6 +1,6 @@
 import { handleProjectsV2ItemEditedEvent } from "./projectsV2Item.js";
-import { getFieldValueBy } from "../../../../github-gql/command/projectsV2Item.js";
-import * as projectsV2Item from "../../../../github-gql/command/projectsV2Item.js";
+import { getFieldValueBy } from "../../../../github-gql/command/projectV2Item.js";
+import * as projectsV2Item from "../../../../github-gql/command/projectV2Item.js";
 import { titleEdited } from "../../payloads/board-issue/edited.js";
 import { numberFieldEdited } from "../../payloads/board-field/number.js";
 import { mockPrisma } from "../../../../../test/mockPrisma.js";

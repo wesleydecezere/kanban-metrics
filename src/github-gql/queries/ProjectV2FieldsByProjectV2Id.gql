@@ -1,0 +1,35 @@
+query ProjectV2FieldsByOrganizationProjectPaged(
+  $login: String!
+  $projectNumber: Int!
+  $paseSize: Int!
+  $lastCursor: String
+) {
+  organization(login: $login) {
+    projectV2(number: $projectNumber) {
+      fields(first: $paseSize, after: $lastCursor) {
+        nodes {
+          __typename
+          ... on ProjectV2Field {
+            id
+            name
+            dataType
+          }
+          ... on ProjectV2SingleSelectField {
+            id
+            name
+            dataType
+          }
+          ... on ProjectV2IterationField {
+            id
+            name
+            dataType
+          }
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@ import { TSystemFieldName } from "../../../prisma/client/types.js";
 import { IssueEvolutionOperations } from "../../../prisma/operations/IssueEvolutionOperations.js";
 import { IssueOperations } from "../../../prisma/operations/IssueOperations.js";
 import { SystemFieldOperations } from "../../../prisma/operations/SystemFieldOperations.js";
-import * as ProjectsV2ItemCommand from "../../github-gql/command/projectsV2Item.js";
+import * as ProjectsV2ItemCommand from "../../github-gql/command/projectV2Item.js";
 import { trackIssueEvolucoesBySprint } from "./jobs.js";
 
 // TODO atualizar impl para usar SystemFieldId ao invés do SystemFieldName

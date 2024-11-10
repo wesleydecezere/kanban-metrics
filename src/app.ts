@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 import { githubRoutes } from "./routes/github/index.js";
 import { webhookRoutes } from "./routes/webhook/webhook.js";
+import { configRoutes } from "./routes/config/index.js";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ express()
   .use(express.json())
   .use("/github", githubRoutes)
   .use("/webhook", webhookRoutes)
+  .use("/config", configRoutes)
   .get("/", (_, res) => {
     res.send("Bem-vindo!");
   })

@@ -1,6 +1,8 @@
 import moment from "moment";
 import { seedSprintWithDeps } from "./sprint/sprintSeed.js";
 import { prisma } from "../client/client.js";
+import { seedSystemField } from "./systemField/systemFieldSeed.js";
+import { seedBoardField } from "./boardField/boardFieldSeed.js";
 
 moment.locale("pt-br", {
   week: {
@@ -10,6 +12,8 @@ moment.locale("pt-br", {
 
 async function main() {
   await seedSprintWithDeps();
+  await seedBoardField();
+  await seedSystemField();
 }
 
 main()

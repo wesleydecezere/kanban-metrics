@@ -28,7 +28,7 @@ export async function getIssueByNodeId(id: string) {
 }
 
 export type GetFieldValueByResult = ReturnType<
-  typeof getProjectV2ItemFieldValue
+  typeof handleProjectV2ItemFieldValue
 >;
 
 export async function getFieldValueBy(args: {
@@ -48,18 +48,19 @@ export async function getFieldValueBy(args: {
 
   if (!data?.node || data.node.__typename !== "ProjectV2Item") return null;
 
-  return getProjectV2ItemFieldValue(data.node.fieldValueByName);
+  return handleProjectV2ItemFieldValue(data.node.fieldValueByName);
 }
 
 // TODO type guard que verifique __typename
 /**
  * se retornar null, campo pode
  * - não existir
- * - não ter atributo utilizado
- * - ter valor null
+ * - ter valor null (acontece na prática?)
  * - ser de um tipo inesperado
+ * se retornar undefined
+ * - tipo de campo não acessado na query (tipo inesperado)
  */
-function getProjectV2ItemFieldValue(
+function handleProjectV2ItemFieldValue(
   fieldValue: Partial<ProjectV2ItemFieldValue> | null | undefined
 ) {
   if (!fieldValue) return null;

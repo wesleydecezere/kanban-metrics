@@ -2,7 +2,7 @@ import { TIssue, TSystemFieldName } from "../../../prisma/client/types.js";
 import {
   getFieldValueBy,
   GetFieldValueByResult,
-} from "../../github-gql/command/projectsV2Item.js";
+} from "../../github-gql/command/projectV2Item.js";
 import { SystemFieldOperations } from "../../../prisma/operations/SystemFieldOperations.js";
 import { IssueEvolutionOperations } from "../../../prisma/operations/IssueEvolutionOperations.js";
 

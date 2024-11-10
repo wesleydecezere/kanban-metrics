@@ -7,7 +7,7 @@ import { isProjectsV2Issue } from "../../../../model/webhook/projectsV2Item.js";
 import {
   getFieldValueBy,
   getIssueByNodeId,
-} from "../../../../github-gql/command/projectsV2Item.js";
+} from "../../../../github-gql/command/projectV2Item.js";
 import { IssueOperations } from "../../../../../prisma/operations/IssueOperations.js";
 
 export async function handleProjectsV2ItemCreated({

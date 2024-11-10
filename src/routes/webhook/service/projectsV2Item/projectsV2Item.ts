@@ -5,7 +5,7 @@ import {
 } from "@octokit/webhooks-types";
 import { isProjectsV2Issue } from "../../../../model/webhook/projectsV2Item.js";
 import {
-  getFieldValueByItemNodeIdAndFieldName,
+  getFieldValueBy,
   getIssueByNodeId,
 } from "../../../../github-gql/command/projectsV2Item.js";
 import { IssueOperations } from "../../../../../prisma/operations/IssueOperations.js";
@@ -62,8 +62,6 @@ async function findIssueAndCreateRecord(nodeId: string) {
  * se não, fazer buscar fieldValue pelo nodeId
  */
 
-// posso criar os campos buscando por todos ProjectV2[]Field no ProjectV2
-
 export async function handleProjectsV2ItemEditedEvent(
   event: ProjectsV2ItemEditedEvent
 ) {
@@ -77,10 +75,10 @@ export async function handleProjectsV2ItemEditedEvent(
     return;
   }
 
-  const fieldValue = await getFieldValueByItemNodeIdAndFieldName(
-    event.projects_v2_item.node_id,
-    fieldType
-  );
+  const fieldValue = await getFieldValueBy({
+    itemNodeId: event.projects_v2_item.node_id,
+    fieldName: fieldType,
+  });
 
   if (!fieldValue) {
     console.log("Field value not found");

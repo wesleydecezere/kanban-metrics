@@ -1,14 +1,13 @@
 import { TIssue, TSystemFieldName } from "../../../prisma/client/types.js";
 import {
   getFieldValueBy,
-  GetFieldValueByItemNodeIdAndFieldNameResult,
-  getProjectV2ItemFieldValue,
+  GetFieldValueByResult,
 } from "../../github-gql/command/projectsV2Item.js";
 import { SystemFieldOperations } from "../../../prisma/operations/SystemFieldOperations.js";
 import { IssueEvolutionOperations } from "../../../prisma/operations/IssueEvolutionOperations.js";
 
 type IssueEvolutionInfo = Partial<
-  Record<TSystemFieldName, GetFieldValueByItemNodeIdAndFieldNameResult>
+  Record<TSystemFieldName, GetFieldValueByResult>
 >;
 
 export async function findIssueEvolutionInfo(issue: TIssue) {
@@ -22,8 +21,7 @@ export async function findIssueEvolutionInfo(issue: TIssue) {
       fieldName: systemField.boardField.name,
     });
 
-    issueEvolutionFieldValueByName[systemField.name] =
-      getProjectV2ItemFieldValue(fieldValue);
+    issueEvolutionFieldValueByName[systemField.name] = fieldValue;
   });
 
   return issueEvolutionFieldValueByName;

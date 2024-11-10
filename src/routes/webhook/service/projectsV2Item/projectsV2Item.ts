@@ -85,16 +85,6 @@ export async function handleProjectsV2ItemEditedEvent(
     return;
   }
 
-  if (
-    fieldValue.__typename !== "ProjectV2ItemFieldTextValue" ||
-    !fieldValue.text
-  ) {
-    console.log(
-      `Field value is not a text, its type is ${fieldValue?.__typename}`
-    );
-    return;
-  }
-
   const issue = await IssueOperations.updateTitleById(
     fieldValue.text,
     event.projects_v2_item.content_node_id

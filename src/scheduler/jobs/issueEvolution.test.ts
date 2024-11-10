@@ -53,24 +53,14 @@ describe("trackIssueEvolutionBySprint", () => {
     .mockImplementation(({ itemNodeId, fieldName }) => {
       let result = {};
 
-      if (fieldName === boardFieldNameBySystemField.POSITION) {
-        result = {
-          __typename: "ProjectV2ItemFieldSingleSelectValue",
-          name: fieldValuesByIssueId[itemNodeId].POSITION,
-        };
-      }
-      if (fieldName === boardFieldNameBySystemField.POINTS_ESTIMATE) {
-        result = {
-          __typename: "ProjectV2ItemFieldNumberValue",
-          number: fieldValuesByIssueId[itemNodeId].POINTS_ESTIMATE,
-        };
-      }
-      if (fieldName === boardFieldNameBySystemField.DONE_PERCENTAGE) {
-        result = {
-          __typename: "ProjectV2ItemFieldNumberValue",
-          number: fieldValuesByIssueId[itemNodeId].DONE_PERCENTAGE,
-        };
-      }
+      if (fieldName === boardFieldNameBySystemField.POSITION)
+        result = fieldValuesByIssueId[itemNodeId].POSITION;
+
+      if (fieldName === boardFieldNameBySystemField.POINTS_ESTIMATE)
+        result = fieldValuesByIssueId[itemNodeId].POINTS_ESTIMATE;
+
+      if (fieldName === boardFieldNameBySystemField.DONE_PERCENTAGE)
+        result = fieldValuesByIssueId[itemNodeId].DONE_PERCENTAGE;
 
       return Promise.resolve(result);
     });

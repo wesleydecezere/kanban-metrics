@@ -27,7 +27,10 @@ export async function getIssueByNodeId(id: string) {
   return { number: node.number, title: node.title };
 }
 
-// TODO type guard que verifique __typename
+export type GetFieldValueByResult = ReturnType<
+  typeof getProjectV2ItemFieldValue
+>;
+
 export async function getFieldValueBy(args: {
   itemNodeId: string;
   fieldName: string;
@@ -45,14 +48,10 @@ export async function getFieldValueBy(args: {
 
   if (!data?.node || data.node.__typename !== "ProjectV2Item") return null;
 
-  return data.node.fieldValueByName;
+  return getProjectV2ItemFieldValue(data.node.fieldValueByName);
 }
 
-export type GetFieldValueByItemNodeIdAndFieldNameResult = ReturnType<
-  typeof getProjectV2ItemFieldValue
->;
-
-// TODO usar na getFieldValueByItemNodeIdAndFieldName
+// TODO type guard que verifique __typename
 /**
  * se retornar null, campo pode
  * - não existir
@@ -60,7 +59,7 @@ export type GetFieldValueByItemNodeIdAndFieldNameResult = ReturnType<
  * - ter valor null
  * - ser de um tipo inesperado
  */
-export function getProjectV2ItemFieldValue(
+function getProjectV2ItemFieldValue(
   fieldValue: Partial<ProjectV2ItemFieldValue> | null | undefined
 ) {
   if (!fieldValue) return null;

@@ -19,6 +19,8 @@ model Sprint {
 
   startWeek YearWeek @relation(name: "StartYearWeek", fields: [startWeekId], references: [id])
   endWeek YearWeek @relation(name: "EndYearWeek", fields: [endWeekId], references: [id])
+
+  issues IssueSprint[]
 }
 
 model YearWeek {
@@ -37,4 +39,60 @@ model Issue {
   id String @id
   number Int
   title String
+
+  sprints IssueSprint[]
+  evolucoes IssueEvolution[]
 }
+
+// https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/many-to-many-relations
+model IssueSprint {
+  @@unique([issueId, sprintId])
+  id Int @id @default(autoincrement())
+  issueId String
+  sprintId Int
+
+  issue Issue @relation(fields: [issueId], references: [id])
+  sprint Sprint @relation(fields: [sprintId], references: [id])
+}
+
+model IssueEvolution {
+  id Int @id @default(autoincrement())
+  issueId String
+
+  date DateTime @db.Date
+  position Int
+  donePercentage Int
+  pointsEstimate Int
+
+  issue Issue @relation(fields: [issueId], references: [id])
+
+  // fields IssueEvolutionField[]
+}
+
+// model IssueEvolutionField {
+//   id Int @id @default(autoincrement())
+//   issueEvolutionId Int
+//   systemFieldId Int
+//   value String
+
+//   issueEvolution IssueEvolution @relation(fields: [issueEvolutionId], references: [id])
+//   systemField SystemField @relation(fields: [systemFieldId], references: [id])
+// }
+
+model BoardField {
+  id String @id
+  name String
+
+  systemField SystemField?
+}
+
+model SystemField {
+  id Int @id @default(autoincrement())
+  name String
+  boardFieldId String @unique
+
+  boardField BoardField @relation(fields: [boardFieldId], references: [id])
+
+  // evolutions IssueEvolutionField[]
+}
+

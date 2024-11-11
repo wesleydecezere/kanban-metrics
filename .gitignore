@@ -144,4 +144,6 @@ src/generated/
 !.env.project
 !.env.vault
 
-*.todo
+*.todo*
+**/todo/
+.early.coverage

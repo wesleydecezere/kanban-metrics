@@ -3,6 +3,9 @@ import { seedSprintWithDeps } from "./sprint/sprintSeed.js";
 import { prisma } from "../client/client.js";
 import { seedSystemField } from "./systemField/systemFieldSeed.js";
 import { seedBoardField } from "./boardField/boardFieldSeed.js";
+import { seedIssue } from "./seedIssue.js";
+import { seedIssueEvolution } from "./seedIssueEvolution.js";
+import { seedIssueSprint } from "./seedIssueSprint.js";
 
 moment.locale("pt-br", {
   week: {
@@ -13,7 +16,10 @@ moment.locale("pt-br", {
 async function main() {
   await seedSprintWithDeps();
   await seedBoardField();
-  await seedSystemField();
+  const boardFieldsOnSystem = await seedSystemField();
+  const issues = await seedIssue();
+  await seedIssueEvolution(issues, boardFieldsOnSystem);
+  await seedIssueSprint();
 }
 
 main()

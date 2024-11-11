@@ -4,10 +4,8 @@ import {
   ProjectsV2ItemEditedEvent,
 } from "@octokit/webhooks-types";
 import { isProjectsV2Issue } from "../../../../model/webhook/projectsV2Item.js";
-import {
-  getFieldValueBy,
-  getIssueByNodeId,
-} from "../../../../github-gql/command/projectV2Item.js";
+import { getFieldValueBy } from "../../../../github-gql/command/projectV2Item.js";
+import { getIssueByNodeId } from "../../../../github-gql/command/issue/getIssueByNodeId.js";
 import { IssueOperations } from "../../../../../prisma/operations/IssueOperations.js";
 
 export async function handleProjectsV2ItemCreated({

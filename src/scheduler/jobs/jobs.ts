@@ -1,20 +1,44 @@
-import { IssueOperations } from "../../../prisma/operations/IssueOperations.js";
 import {
-  findIssueEvolutionInfo,
-  saveIssueEvolution,
-} from "./issueEvolution.js";
+  IssueEvolutionCreateProps,
+  IssueEvolutionOperations,
+} from "../../../prisma/operations/IssueEvolutionOperations.js";
+import { IssueOperations } from "../../../prisma/operations/IssueOperations.js";
+import { findIssueEvolutionInfo } from "./issueEvolution.js";
 
+// TODO verificar se precisa ser da sprint
+/**
+ * disparado no início da sprint
+ * precisa rodar depois do job issueSprint
+ *
+ */
+
+// When it returns to the backlog, it is considered out of the sprint => issueSprint should be removed
 export async function trackIssueEvolucoesBySprint(sprintId: number) {
-  // busca no db id issues da sprint
   const issues = await IssueOperations.findBySprintId(sprintId);
 
-  // para cada issue
+  const batch: IssueEvolutionCreateProps[] = [];
+
+  // map
   for (const issue of issues) {
+    const now = new Date();
+
     const evolutionInfo = await findIssueEvolutionInfo(issue);
-    // TODO tratar erro
-    // TODO mudar pra batch
-    await saveIssueEvolution(issue, evolutionInfo);
+
+    batch.push({
+      issueId: issue.id,
+      date: now,
+      position: evolutionInfo.POSITION,
+      pointsEstimate: evolutionInfo.POINTS_ESTIMATE,
+      donePercentage: evolutionInfo.DONE_PERCENTAGE,
+    });
   }
+
+  console.log(batch);
+
+  // TODO fix testes
+  await IssueEvolutionOperations.createMany(batch);
+
+  return batch;
 }
 
 // export function calculateVelocityBySprint(sprintId: string);

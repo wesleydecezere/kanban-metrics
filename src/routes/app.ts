@@ -1,9 +1,10 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import { githubRoutes } from "./routes/github/index.js";
-import { webhookRoutes } from "./routes/webhook/webhook.js";
-import { configRoutes } from "./routes/config/index.js";
+import { githubRoutes } from "./github/index.js";
+import { webhookRoutes } from "./webhook/webhook.js";
+import { configRoutes } from "./config/index.js";
+import { boardRoutes } from "./board/index.js";
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ express()
   .use("/github", githubRoutes)
   .use("/webhook", webhookRoutes)
   .use("/config", configRoutes)
+  .use("/board", boardRoutes)
   .get("/", (_, res) => {
     res.send("Bem-vindo!");
   })

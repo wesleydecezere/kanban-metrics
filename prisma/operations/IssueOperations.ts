@@ -32,4 +32,14 @@ export class IssueOperations {
       },
     });
   }
+
+  static async findAllWithEvolution() {
+    return prisma.issue.findMany({
+      where: {
+        evolutions: {
+          some: {},
+        },
+      },
+    });
+  }
 }

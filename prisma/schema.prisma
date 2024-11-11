@@ -41,13 +41,14 @@ model Issue {
   title String
 
   sprints IssueSprint[]
-  evolucoes IssueEvolution[]
+  evolutions IssueEvolution[]
 }
 
 // https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/many-to-many-relations
 model IssueSprint {
-  @@unique([issueId, sprintId])
-  id Int @id @default(autoincrement())
+  // @@unique([issueId, sprintId])
+  @@id([issueId, sprintId])
+  // id Int @default(autoincrement())
   issueId String
   sprintId Int
 
@@ -60,7 +61,7 @@ model IssueEvolution {
   issueId String
 
   date DateTime @db.Date
-  position Int
+  position String
   donePercentage Int
   pointsEstimate Int
 

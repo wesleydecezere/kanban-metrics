@@ -1,5 +1,5 @@
 import moment from "moment";
-import { prisma } from "../client/client";
+import { prisma } from "../client/client.js";
 
 export class SprintOperations {
   static async createWithDeps(props: {
@@ -32,6 +32,29 @@ export class SprintOperations {
           },
         },
         number,
+      },
+    });
+  }
+
+  static async findByDate(date: Date) {
+    return prisma.sprint.findFirst({
+      where: {
+        AND: [
+          {
+            startWeek: {
+              start: {
+                lte: date,
+              },
+            },
+          },
+          {
+            endWeek: {
+              end: {
+                gte: date,
+              },
+            },
+          },
+        ],
       },
     });
   }

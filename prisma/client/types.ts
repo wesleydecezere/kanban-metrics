@@ -1,6 +1,7 @@
-import { Issue } from "@prisma/client";
+import { Issue, SystemField } from "@prisma/client";
 
 export type TIssue = Issue;
+export type TSystemField = SystemField;
 
 export const SystemFieldRecord: Record<TSystemFieldName, TSystemFieldId> = {
   POSITION: 0,

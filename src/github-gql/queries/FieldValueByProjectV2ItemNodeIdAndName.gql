@@ -1,21 +1,27 @@
 query FieldValueByProjectV2ItemNodeIdAndFieldName($id: ID!, $name: String!) {
   node(id: $id) {
     ... on ProjectV2Item {
+      id
       fieldValueByName(name: $name) {
         # tipo pode ser tudo o que tá aqui ProjectV2ItemFieldValue
         ... on ProjectV2ItemFieldTextValue {
+          id
           text
         }
         ... on ProjectV2ItemFieldSingleSelectValue {
+          id
           name
         }
         ... on ProjectV2ItemFieldNumberValue {
+          id
           number
         }
         ... on ProjectV2ItemFieldIterationValue {
+          id
           title
         }
         ... on ProjectV2ItemFieldDateValue {
+          id
           date
         }
       }

@@ -1,6 +1,7 @@
 query IssueByNodeId($id: ID!) {
   node(id: $id) {
     ... on Issue {
+      id
       number
       title
     }

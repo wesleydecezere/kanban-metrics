@@ -1,11 +1,15 @@
 /**
- * eventos de interesse
+ * EVENTOS DE INTERESSE
  *
  *
  * project_v2_item
- * - criação de issue
- * - conversão para issue (se criação não for chamada por tabela)
+ * - [ok] criação de issue
+ * - [ok] conversão para issue (se criação não for chamada por tabela)
+ * - restauração de issue (se criação não for chamada no lugar)
  * - edição de qualquer campo
+ *
+ * - > [ok] título
+ * - > campos personalizados
  *
  *
  * issue (talvez não seja interessante pra algo que roda em cima do board)
@@ -19,9 +23,11 @@
  */
 
 /**
- * 1. identificar cada tipo de evento e chamar o handler - ok
- * 2. (condicional) para eventos de edição, identificar o que foi alterado
- * 3. chamar serviço da aplicação para atualizar o banco de dados (vai ser endpoint só depois)
+ * ETAPAS
+ * 
+ * [ok] 1. identificar cada tipo de evento e chamar o handler
+ * [ok] 2. (condicional) para eventos de edição, identificar o que foi alterado
+ * [ok] 3. chamar serviço da aplicação para atualizar o banco de dados (vai ser endpoint só depois)
 
 */
 

@@ -1,4 +1,4 @@
-query ProjectV2FieldsByOrganizationProjectPaged(
+query ProjectV2FieldsByOrganizationProjectV2Paged(
   $login: String!
   $projectNumber: Int!
   $paseSize: Int!

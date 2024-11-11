@@ -4,51 +4,49 @@ import {
   ProjectV2SingleSelectField,
 } from "@octokit/graphql-schema/schema.js";
 import {
-  ProjectV2FieldsByOrganizationProjectPagedDocument,
-  ProjectV2FieldsByOrganizationProjectPagedQuery,
-  ProjectV2FieldsByOrganizationProjectPagedQueryVariables,
+  ProjectV2FieldsByOrganizationProjectV2PagedDocument,
+  ProjectV2FieldsByOrganizationProjectV2PagedQuery,
+  ProjectV2FieldsByOrganizationProjectV2PagedQueryVariables,
 } from "../../generated/graphql/types.js";
 import { GithubApolloClient } from "../GithubApolloClient.js";
+import { PAGE_SIZE_DEFAULT } from "./util.js";
 
 type ProjectV2FieldResult = NonNullable<
   ReturnType<typeof handleProjectV2Field>
 >;
 
 export async function getAllProjectV2Fields(
-  batch: ProjectV2FieldResult[] = [],
   lastCursor?: string | null
-) {
-  const fieldPage = await getProjectV2Fields(lastCursor);
+): Promise<ProjectV2FieldResult[]> {
+  const { fields, hasNextPage, endCursor } = await getProjectV2FieldsPaged(
+    lastCursor
+  );
 
-  // TODO Array::isEmpty
-  if (!fieldPage.fields) return batch;
-
-  batch = batch.concat(fieldPage.fields);
-
-  if (fieldPage.hasNextPage) {
-    return getAllProjectV2Fields(batch, fieldPage.endCursor);
+  if (hasNextPage) {
+    const nextFields = await getAllProjectV2Fields(endCursor);
+    return [...fields, ...nextFields];
   }
 
-  return batch;
+  return fields;
 }
 
 /*
  * atualmente o sistema não suporta mais de um projeto
  * seria interessante suportar: instação centralizada + controle de acesso + padronização
  */
-async function getProjectV2Fields(lastCursor?: string | null) {
+async function getProjectV2FieldsPaged(lastCursor?: string | null) {
   const {
     data: { organization },
   } = await GithubApolloClient.instance.query<
-    ProjectV2FieldsByOrganizationProjectPagedQuery,
-    ProjectV2FieldsByOrganizationProjectPagedQueryVariables
+    ProjectV2FieldsByOrganizationProjectV2PagedQuery,
+    ProjectV2FieldsByOrganizationProjectV2PagedQueryVariables
   >({
-    query: ProjectV2FieldsByOrganizationProjectPagedDocument,
+    query: ProjectV2FieldsByOrganizationProjectV2PagedDocument,
     variables: {
       // TODO rever uso de env + construtor de tipo
       login: String(process.env.GITHUB_ORGANIZATION),
       projectNumber: Number(process.env.GITHUB_PROJECT_NUMBER),
-      paseSize: 100,
+      paseSize: PAGE_SIZE_DEFAULT,
       lastCursor,
     },
   });

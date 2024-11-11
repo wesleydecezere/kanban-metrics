@@ -3,34 +3,14 @@ import {
   FieldValueByProjectV2ItemNodeIdAndFieldNameDocument,
   FieldValueByProjectV2ItemNodeIdAndFieldNameQuery,
   FieldValueByProjectV2ItemNodeIdAndFieldNameQueryVariables,
-  IssueByNodeIdQueryVariables,
-  IssueByNodeIdDocument,
-  IssueByNodeIdQuery,
 } from "../../generated/graphql/types.js";
 import { ProjectV2ItemFieldValue } from "@octokit/graphql-schema/schema.js";
-
-export async function getIssueByNodeId(id: string) {
-  const {
-    data: { node },
-  } = await GithubApolloClient.instance.query<
-    IssueByNodeIdQuery,
-    IssueByNodeIdQueryVariables
-  >({
-    query: IssueByNodeIdDocument,
-    variables: {
-      id,
-    },
-  });
-
-  if (node?.__typename !== "Issue") return;
-
-  return { number: node.number, title: node.title };
-}
 
 export type GetFieldValueByResult = ReturnType<
   typeof handleProjectV2ItemFieldValue
 >;
 
+// TODO receive T to cast if handle doesnt returns nil (cast if is T, else return null)
 export async function getFieldValueBy(args: {
   itemNodeId: string;
   fieldName: string;
@@ -44,6 +24,7 @@ export async function getFieldValueBy(args: {
       id: args.itemNodeId,
       name: args.fieldName,
     },
+    fetchPolicy: "no-cache",
   });
 
   if (!data?.node || data.node.__typename !== "ProjectV2Item") return null;

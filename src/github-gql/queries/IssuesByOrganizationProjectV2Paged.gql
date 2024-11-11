@@ -1,0 +1,33 @@
+query IssuesByOrganizationProjectV2Paged(
+  $login: String!
+  $projectNumber: Int!
+  $paseSize: Int!
+  $lastCursor: String
+) {
+  organization(login: $login) {
+    projectV2(number: $projectNumber) {
+      items(first: $paseSize, after: $lastCursor) {
+        nodes {
+          id
+          content {
+            __typename
+            ... on Issue {
+              number
+            }
+          }
+          title: fieldValueByName(name: "Title") {
+            __typename
+            ... on ProjectV2ItemFieldTextValue {
+              text
+            }
+          }
+          type
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+      }
+    }
+  }
+}

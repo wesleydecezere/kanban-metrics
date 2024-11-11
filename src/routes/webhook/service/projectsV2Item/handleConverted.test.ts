@@ -1,7 +1,7 @@
 import { converted } from "../../payloads/board-issue/converted.js";
 import * as projectsV2Item from "../../../../github-gql/command/projectV2Item.js";
 import { handleProjectsV2ItemConvertedEvent } from "./projectsV2Item.js";
-import { getIssueByNodeId } from "../../../../github-gql/command/projectV2Item.js";
+import { getIssueByNodeId } from "../../../../github-gql/command/issue/getIssueByNodeId.js";
 import { mockPrisma } from "../../../../../test/mockPrisma.js";
 
 describe("handleProjectsV2ItemConverted", () => {

@@ -15,14 +15,14 @@ export async function findIssueEvolutionInfo(issue: TIssue) {
 
   const issueEvolutionFieldValueByName: IssueEvolutionInfo = {};
 
-  systemFields.forEach(async (systemField) => {
+  for (const systemField of systemFields) {
     const fieldValue = await getFieldValueBy({
       itemNodeId: issue.id,
       fieldName: systemField.boardField.name,
     });
 
     issueEvolutionFieldValueByName[systemField.name] = fieldValue;
-  });
+  }
 
   return issueEvolutionFieldValueByName;
 }

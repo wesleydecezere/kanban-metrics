@@ -9,9 +9,6 @@ import {
   IssueEvolutionOperations,
 } from "../operations/IssueEvolutionOperations.js";
 
-// TODO impl tables for this
-const POSITION_OUT_SPRINT = "Backlog";
-
 export type SeedIssueEvolutionResult = ReturnType<typeof seedIssueEvolution>;
 
 // TODO label errors, log info
@@ -43,14 +40,13 @@ export async function seedIssueEvolution(
   }
 
   const issueEvolutionBatch: IssueEvolutionCreateProps[] = [];
+  const now = new Date();
 
   for (const issue of issues) {
     const positionValue = await getFieldValueBy({
       itemNodeId: issue.id,
       fieldName: positionFieldName.boardField.name,
     });
-
-    if (positionValue !== POSITION_OUT_SPRINT) continue;
 
     const pointsEstimateValue =
       pointsFieldName &&
@@ -65,8 +61,6 @@ export async function seedIssueEvolution(
         itemNodeId: issue.id,
         fieldName: donePercentageFieldName.boardField.name,
       }));
-
-    const now = new Date();
 
     issueEvolutionBatch.push({
       issueId: issue.id,

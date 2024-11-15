@@ -33,11 +33,15 @@ export class IssueOperations {
     });
   }
 
-  static async findAllWithEvolution() {
+  static async findByPosition(...position: string[]) {
     return prisma.issue.findMany({
       where: {
         evolutions: {
-          some: {},
+          some: {
+            position: {
+              in: position,
+            },
+          },
         },
       },
     });

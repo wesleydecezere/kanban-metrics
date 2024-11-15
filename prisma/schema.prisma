@@ -61,9 +61,10 @@ model IssueEvolution {
   issueId String
 
   date DateTime @db.Date
+  // TODO replace by status
   position String
-  donePercentage Int
-  pointsEstimate Int
+  donePercentage Int?
+  pointsEstimate Int?
 
   issue Issue @relation(fields: [issueId], references: [id])
 

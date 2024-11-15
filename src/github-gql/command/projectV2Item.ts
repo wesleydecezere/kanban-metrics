@@ -36,7 +36,7 @@ export async function getFieldValueBy(args: {
 /**
  * se retornar null, campo pode
  * - não existir
- * - ter valor null (acontece na prática?)
+ * - ter valor null (acontece na prática? sim!)
  * - ser de um tipo inesperado
  * se retornar undefined
  * - tipo de campo não acessado na query (tipo inesperado)

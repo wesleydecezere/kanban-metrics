@@ -2,6 +2,9 @@ import { IssueOperations } from "../operations/IssueOperations.js";
 import { IssueSprintOperations } from "../operations/IssueSprintOperations.js";
 import { SprintOperations } from "../operations/SprintOperations.js";
 
+// TODO impl tables for this
+const SPRINT_POSITIONS = ["Ready", "In progress", "In review", "Done"];
+
 // TODO log info and label it
 // at this moment, all evolutions should have postition > backlog; after this it isnt true anymore
 export async function seedIssueSprint() {
@@ -13,7 +16,9 @@ export async function seedIssueSprint() {
     return;
   }
 
-  const issuesWithEvolution = await IssueOperations.findAllWithEvolution();
+  const issuesWithEvolution = await IssueOperations.findByPosition(
+    ...SPRINT_POSITIONS
+  );
 
   const promises = issuesWithEvolution.map((issue) =>
     IssueSprintOperations.upsert(sprint.id, issue.id)

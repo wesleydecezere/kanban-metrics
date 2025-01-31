@@ -22,7 +22,13 @@ export async function handleProjectsV2ItemCreated({
 
 export async function handleProjectsV2ItemConvertedEvent({
   projects_v2_item,
+  changes,
 }: ProjectsV2ItemConvertedEvent) {
+  if (changes.content_type.from === null) {
+    console.log("Projects V2 item converted is has been created before");
+    return;
+  }
+
   await findIssueAndCreateRecord(projects_v2_item.content_node_id);
 }
 

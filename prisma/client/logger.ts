@@ -20,14 +20,15 @@ export const logDefinitions: Prisma.LogDefinition[] = [
   },
 ];
 
-export const queryLogger = ({ query, duration }: Prisma.QueryEvent) => {
+export const queryLogger = ({ query, duration, params }: Prisma.QueryEvent) => {
   if (!query.startsWith("INSERT")) return;
 
   const relation = query.match(/INTO "public"\."(?<relation>.*)" \(/)?.groups
     ?.relation;
 
-  console.log(
-    chalk.magenta(`prisma:query`),
-    `Insert into ${chalk.bold(relation)} (${duration} ms)`
-  );
+  const message =
+    `Insert into ${chalk.bold(relation)} ` +
+    `(${duration}) ms with params ${params}`;
+
+  console.log(chalk.magenta(`prisma:query`), message);
 };

@@ -43,38 +43,33 @@ export function handlePostRoot(req, res) {
   }
 
   if (isIssuesEditedEvent(webhookEvent)) {
-    return handleIssuesEditedEvent(webhookEvent);
+    handleIssuesEditedEvent(webhookEvent);
   }
 
   // identificar blocked/standby (na real não precisa pra velocity)
-  if (isIssuesLabeledEvent(webhookEvent)) {
-    return handleIssuesLabeledEvent(webhookEvent);
+  else if (isIssuesLabeledEvent(webhookEvent)) {
+    handleIssuesLabeledEvent(webhookEvent);
   }
 
   // melhorar identificação issue
-  if (
+  else if (
     isProjectsV2ItemCreatedEvent(webhookEvent) &&
     webhookEvent.projects_v2_item.content_type === "Issue"
   ) {
-    return handleProjectsV2ItemCreated(webhookEvent);
-  }
-
-  if (
+    handleProjectsV2ItemCreated(webhookEvent);
+  } else if (
     isProjectsV2ItemEditedEvent(webhookEvent) &&
     webhookEvent.projects_v2_item.content_type === "Issue"
   ) {
-    return handleProjectsV2ItemEditedEvent(webhookEvent);
-  }
-
-  if (
+    handleProjectsV2ItemEditedEvent(webhookEvent);
+  } else if (
     isProjectsV2ItemConvertedEvent(webhookEvent) &&
     webhookEvent.projects_v2_item.content_type === "Issue"
   ) {
-    return handleProjectsV2ItemConvertedEvent(webhookEvent);
+    handleProjectsV2ItemConvertedEvent(webhookEvent);
   }
 
   // precisa restored?
-
   res.send("/webhook fallback");
   return;
 }

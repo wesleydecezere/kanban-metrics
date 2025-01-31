@@ -33,7 +33,7 @@ export async function trackIssueEvolucoesBySprint(sprintId: number) {
     });
   }
 
-  console.log(batch);
+  console.log("trackIssueEvolucoesBySprint", batch);
 
   // TODO fix testes
   await IssueEvolutionOperations.createMany(batch);

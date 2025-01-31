@@ -7,6 +7,12 @@ import { isProjectsV2Issue } from "../../../../model/webhook/projectsV2Item.js";
 import { getFieldValueBy } from "../../../../github-gql/command/projectV2Item.js";
 import { getIssueByNodeId } from "../../../../github-gql/command/issue/getIssueByNodeId.js";
 import { IssueOperations } from "../../../../../prisma/operations/IssueOperations.js";
+import { ProjectV2FieldType } from "@octokit/graphql-schema";
+import { SystemFieldOperations } from "../../../../../prisma/operations/SystemFieldOperations.js";
+import { TSystemFieldName } from "../../../../../prisma/client/types.js";
+import { SprintOperations } from "../../../../../prisma/operations/SprintOperations.js";
+import { IssueSprintOperations } from "../../../../../prisma/operations/IssueSprintOperations.js";
+import { SPRINT_POSITIONS } from "../../../../../prisma/seeds/seedIssueSprint.js";
 
 export async function handleProjectsV2ItemCreated({
   projects_v2_item,
@@ -60,22 +66,30 @@ async function findIssueAndCreateRecord(nodeId: string) {
  * se não, fazer buscar fieldValue pelo nodeId
  */
 
+type RealProjectV2FieldType = Lowercase<ProjectV2FieldType>;
+
 export async function handleProjectsV2ItemEditedEvent(
   event: ProjectsV2ItemEditedEvent
 ) {
   // TODO criar tipo adaptado de graphql-schema::ProjectV2FieldType
-  const fieldType: string = event.changes.field_value.field_type;
+  const fieldType = event.changes.field_value
+    .field_type as RealProjectV2FieldType;
 
-  if (fieldType !== "title") {
+  if (fieldType !== "title" && fieldType !== "single_select") {
     console.log(
-      `The updated field is not an issue title, its type is ${fieldType}`
+      `The updated field is not an issue title or a single select field, its type is ${fieldType}`
     );
     return;
   }
 
+  const projectV2ItemId = event.projects_v2_item.node_id;
+  const issueId = event.projects_v2_item.content_node_id;
+  const fieldName = event.changes.field_value.;
+
+
   const fieldValue = await getFieldValueBy({
-    itemNodeId: event.projects_v2_item.node_id,
-    fieldName: fieldType,
+    itemNodeId: projectV2ItemId,
+    fieldName: fieldType, // TÁ ERRADO AQUI, DEVE TER MAIS COSA ERRADA DEPOIS
   });
 
   if (!fieldValue) {
@@ -83,10 +97,58 @@ export async function handleProjectsV2ItemEditedEvent(
     return;
   }
 
-  const issue = await IssueOperations.updateTitleById(
-    fieldValue.text,
-    event.projects_v2_item.content_node_id
-  );
+  // dúvida: não deveria ser o changes.field_values.field_node_id?
+  const fieldId = event.projects_v2_item.content_node_id;
 
-  console.log(`Issue ${issue.id} had title updated to '${issue.title}'`);
+  // como identificar que o single_select é o status?
+
+  // poderia ser extensível para qualquer campo da issue
+  // esses campos tem node_id fora da issue?
+  if (fieldType === "title") {
+    const issue = await IssueOperations.updateTitleById(
+      fieldValue.text,
+      fieldId
+    );
+
+    console.log(`Issue ${issue.id} had title updated to '${issue.title}'`);
+
+    return;
+  }
+
+  // ou qualquer outro do board
+  if (fieldType === "single_select") {
+    // pega system_field by board_field_id
+    const systemFieldName = await SystemFieldOperations.findByBoardFieldId(
+      fieldId
+    );
+
+    // chama handle de acordo com system_field
+    if (systemFieldName?.name === TSystemFieldName.POSITION) {
+      await handleIssueStatusEdited(fieldValue, issueId);
+    }
+
+    return;
+  }
+}
+
+async function handleIssueStatusEdited(fieldValue: string, issueId: string) {
+  const currentSprint = await SprintOperations.findCurrent();
+
+  if (currentSprint === null) {
+    throw new Error("No current sprint found");
+  }
+
+  if (SPRINT_POSITIONS.includes(fieldValue)) {
+    await IssueSprintOperations.upsert({
+      issueId,
+      sprintId: currentSprint.id,
+    });
+
+    return;
+  }
+
+  await IssueSprintOperations.delete({
+    issueId,
+    sprintId: currentSprint.id,
+  });
 }

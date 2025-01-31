@@ -6,4 +6,11 @@ export class SystemFieldOperations {
       select: { name: true, boardField: { select: { name: true } } },
     });
   }
+
+  static async findByBoardFieldId(boardFieldId: string) {
+    return prisma.systemField.findUnique({
+      where: { boardFieldId },
+      select: { name: true },
+    });
+  }
 }

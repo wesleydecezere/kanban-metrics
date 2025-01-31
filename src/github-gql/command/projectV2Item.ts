@@ -10,6 +10,8 @@ export type GetFieldValueByResult = ReturnType<
   typeof handleProjectV2ItemFieldValue
 >;
 
+export type GetFieldValueInput = Parameters<typeof getFieldValueBy>[0];
+
 // TODO receive T to cast if handle doesnt returns nil (cast if is T, else return null)
 export async function getFieldValueBy(args: {
   itemNodeId: string;
@@ -26,6 +28,8 @@ export async function getFieldValueBy(args: {
     },
     fetchPolicy: "no-cache",
   });
+
+  console.log(data);
 
   if (!data?.node || data.node.__typename !== "ProjectV2Item") return null;
 

@@ -58,4 +58,8 @@ export class SprintOperations {
       },
     });
   }
+
+  static async findCurrent() {
+    return this.findByDate(new Date());
+  }
 }

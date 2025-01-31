@@ -1,4 +1,4 @@
-import { Issue, SystemField } from "@prisma/client";
+import { Issue, SystemField, SystemFieldName } from "@prisma/client";
 
 export type TIssue = Issue;
 export type TSystemField = SystemField;
@@ -11,7 +11,5 @@ export const SystemFieldRecord: Record<TSystemFieldName, TSystemFieldId> = {
 
 // TODO substituir record por enum, criar esses tipos a partir do enum
 export type TSystemFieldId = 0 | 1 | 2;
-export type TSystemFieldName =
-  | "POSITION"
-  | "POINTS_ESTIMATE"
-  | "DONE_PERCENTAGE";
+export type TSystemFieldName = SystemFieldName;
+export const TSystemFieldName = SystemFieldName;

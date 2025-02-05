@@ -1,6 +1,6 @@
 {
   "exec": "yarn codegen && yarn start:tsx",
-  "ext": "ts,graphql,gql,json",
+  "ext": "ts,gql,json",
   "watch": ["src/**"],
   "events": {
     "start": "clear",

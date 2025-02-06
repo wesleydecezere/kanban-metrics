@@ -16,7 +16,7 @@ import {
   handleIssuesLabeledEvent,
 } from "./service/issues.js";
 import {
-  handleProjectsV2ItemCreatedEvent,
+  handleProjectsV2ItemCreated,
   handleProjectsV2ItemEditedEvent,
   handleProjectsV2ItemConvertedEvent,
 } from "./service/projectsV2Item/projectsV2Item.js";
@@ -56,7 +56,7 @@ export function handlePostRoot(req, res) {
     isProjectsV2ItemCreatedEvent(webhookEvent) &&
     webhookEvent.projects_v2_item.content_type === "Issue"
   ) {
-    handleProjectsV2ItemCreatedEvent(webhookEvent);
+    handleProjectsV2ItemCreated(webhookEvent);
   } else if (
     isProjectsV2ItemEditedEvent(webhookEvent) &&
     webhookEvent.projects_v2_item.content_type === "Issue"

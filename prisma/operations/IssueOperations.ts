@@ -12,4 +12,18 @@ export class IssueOperations {
       data: props,
     });
   }
+
+  static async updateTitleById(
+    title: IssueProps["title"],
+    id: IssueProps["id"]
+  ) {
+    return prisma.issue.update({
+      data: {
+        title,
+      },
+      where: {
+        id,
+      },
+    });
+  }
 }

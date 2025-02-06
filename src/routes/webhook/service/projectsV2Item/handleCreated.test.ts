@@ -1,6 +1,6 @@
 import { ProjectsV2ItemCreatedEvent } from "@octokit/webhooks-types";
 import { getIssueByNodeId } from "../../../../github-gql/command/projectsV2Item.js";
-import { handleProjectsV2ItemCreatedEvent } from "./projectsV2Item.js";
+import { handleProjectsV2ItemCreated } from "./projectsV2Item.js";
 import { created } from "../../payloads/board-issue/created.js";
 import * as projectsV2Item from "../../../../github-gql/command/projectsV2Item.js";
 import { mockPrisma } from "../../../../../test/mockPrisma.js";
@@ -27,7 +27,7 @@ describe("handleProjectsV2ItemCreated", () => {
       },
     };
 
-    await handleProjectsV2ItemCreatedEvent(projectsV2DraftIssueCreatedEvent);
+    await handleProjectsV2ItemCreated(projectsV2DraftIssueCreatedEvent);
 
     expect(spyGetIssueByNodeId).not.toHaveBeenCalled();
   });
@@ -35,7 +35,7 @@ describe("handleProjectsV2ItemCreated", () => {
   it("should log a message if the issue node is not found", async () => {
     spyGetIssueByNodeId.mockResolvedValue(null);
 
-    await handleProjectsV2ItemCreatedEvent(created);
+    await handleProjectsV2ItemCreated(created);
 
     expect(getIssueByNodeId).toHaveBeenCalledWith(contentNodeId);
   });
@@ -53,7 +53,7 @@ describe("handleProjectsV2ItemCreated", () => {
       ...mockIssue,
     });
 
-    await handleProjectsV2ItemCreatedEvent(created);
+    await handleProjectsV2ItemCreated(created);
 
     expect(getIssueByNodeId).toHaveBeenCalledWith(contentNodeId);
     expect(mockPrisma.issue.create).toHaveBeenCalledWith({

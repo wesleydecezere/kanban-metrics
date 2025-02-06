@@ -4,10 +4,13 @@ import {
   ProjectsV2ItemEditedEvent,
 } from "@octokit/webhooks-types";
 import { isProjectsV2Issue } from "../../../../model/webhook/projectsV2Item.js";
-import { getIssueByNodeId } from "../../../../github-gql/command/projectsV2Item.js";
+import {
+  getFieldValueByItemNodeIdAndFieldName,
+  getIssueByNodeId,
+} from "../../../../github-gql/command/projectsV2Item.js";
 import { IssueOperations } from "../../../../../prisma/operations/IssueOperations.js";
 
-export async function handleProjectsV2ItemCreatedEvent({
+export async function handleProjectsV2ItemCreated({
   projects_v2_item,
 }: ProjectsV2ItemCreatedEvent) {
   if (!isProjectsV2Issue(projects_v2_item)) {
@@ -64,5 +67,40 @@ async function findIssueAndCreateRecord(nodeId: string) {
 export async function handleProjectsV2ItemEditedEvent(
   event: ProjectsV2ItemEditedEvent
 ) {
-  // TODO
+  // TODO criar tipo adaptado de graphql-schema::ProjectV2FieldType
+  const fieldType: string = event.changes.field_value.field_type;
+
+  if (fieldType !== "title") {
+    console.log(
+      `The updated field is not an issue title, its type is ${fieldType}`
+    );
+    return;
+  }
+
+  const fieldValue = await getFieldValueByItemNodeIdAndFieldName(
+    event.projects_v2_item.node_id,
+    fieldType
+  );
+
+  if (!fieldValue) {
+    console.log("Field value not found");
+    return;
+  }
+
+  if (
+    fieldValue.__typename !== "ProjectV2ItemFieldTextValue" ||
+    !fieldValue.text
+  ) {
+    console.log(
+      `Field value is not a text, its type is ${fieldValue?.__typename}`
+    );
+    return;
+  }
+
+  const issue = await IssueOperations.updateTitleById(
+    fieldValue.text,
+    event.projects_v2_item.content_node_id
+  );
+
+  console.log(`Issue ${issue.id} had title updated to '${issue.title}'`);
 }

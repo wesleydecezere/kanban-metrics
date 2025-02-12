@@ -28,7 +28,7 @@ export const queryLogger = ({ query, duration, params }: Prisma.QueryEvent) => {
 
   const message =
     `Insert into ${chalk.bold(relation)} ` +
-    `(${duration}) ms with params ${params}`;
+    `with params ${params} (${duration} ms)`;
 
   console.log(chalk.magenta(`prisma:query`), message);
 };

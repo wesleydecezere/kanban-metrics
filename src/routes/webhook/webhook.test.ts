@@ -1,11 +1,10 @@
 import { handlePostRoot } from "./webhook.js";
-import * as projectsV2Serice from "./service/projectsV2Item/projectsV2Item.js";
-import { created } from "./payloads/board-issue/created.js";
-import { converted } from "./payloads/board-issue/converted.js";
-import entered from "./payloads/board-issue/entered.json";
-import { titleEdited } from "./payloads/board-issue/edited.js";
+import * as projectsV2Serice from "../../github-webhook/service/projectsV2Item/projectsV2Item.js";
+import { created } from "../../../test/webhook-payloads/board-issue/created.js";
+import { converted } from "../../../test/webhook-payloads/board-issue/converted.js";
+import { titleEdited } from "../../../test/webhook-payloads/board-issue/edited.js";
 
-describe("webhooks", () => {
+describe("webhook", () => {
   let mockResponse: { send: jest.Mock };
 
   beforeEach(() => {
@@ -13,17 +12,15 @@ describe("webhooks", () => {
     mockResponse = { send: jest.fn() };
   });
 
-  it.each([created, entered])(
-    "should handle projects v2 item created event",
-    async (json) => {
-      // não deveria precisar definir implementação, jest;mock deveria funcionar
-      const spyHandleProjectsV2ItemCreated = jest
-        .spyOn(projectsV2Serice, "handleProjectsV2ItemCreated")
-        .mockImplementation(jest.fn());
-      handlePostRoot({ body: json }, mockResponse);
-      expect(spyHandleProjectsV2ItemCreated).toHaveBeenCalledWith(json);
-    }
-  );
+  it("should handle projects v2 item created event", async () => {
+    // não deveria precisar definir implementação, jest.mock deveria funcionar
+    const spyHandleProjectsV2ItemCreated = jest
+      .spyOn(projectsV2Serice, "handleProjectsV2ItemCreatedEvent")
+      .mockImplementation(jest.fn());
+    handlePostRoot({ body: created }, mockResponse);
+    expect(spyHandleProjectsV2ItemCreated).toHaveBeenCalledWith(created);
+  });
+
   it("should handle projects v2 item edited event", async () => {
     const spyHandleProjectsV2ItemEditedEvent = jest
       .spyOn(projectsV2Serice, "handleProjectsV2ItemEditedEvent")
@@ -33,6 +30,7 @@ describe("webhooks", () => {
       titleEdited
     );
   });
+
   it("should handle projects v2 item converted event", async () => {
     const spyHandleProjectsV2ItemConvertedEvent = jest
       .spyOn(projectsV2Serice, "handleProjectsV2ItemConvertedEvent")

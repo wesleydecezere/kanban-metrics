@@ -5,21 +5,21 @@ import {
   isProjectsV2ItemEditedEvent,
   isProjectsV2ItemEvent,
   isProjectsV2ItemConvertedEvent,
-} from "../../model/webhook/event.js";
+} from "../../github-webhook/model/event.js";
 import {
   isIssuesEditedEvent,
   isIssuesEvent,
   isIssuesLabeledEvent,
-} from "../../model/webhook/issues.js";
+} from "../../github-webhook/model/issues.js";
 import {
   handleIssuesEditedEvent,
   handleIssuesLabeledEvent,
-} from "./service/issues.js";
+} from "../../github-webhook/service/issues.js";
 import {
   handleProjectsV2ItemCreatedEvent,
   handleProjectsV2ItemEditedEvent,
   handleProjectsV2ItemConvertedEvent,
-} from "./service/projectsV2Item/projectsV2Item.js";
+} from "../../github-webhook/service/projectsV2Item/projectsV2Item.js";
 
 export const webhookRoutes = Router();
 

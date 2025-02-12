@@ -1,9 +1,9 @@
 import { ProjectsV2ItemCreatedEvent } from "@octokit/webhooks-types";
-import { getIssueByNodeId } from "../../../../github-gql/command/projectsV2Item.js";
+import { getIssueByNodeId } from "../../../github-gql/issue.js";
 import { handleProjectsV2ItemCreatedEvent } from "./projectsV2Item.js";
-import { created } from "../../payloads/board-issue/created.js";
-import * as projectsV2Item from "../../../../github-gql/command/projectsV2Item.js";
-import { mockPrisma } from "../../../../../test/mockPrisma.js";
+import { created } from "../../../../test/webhook-payloads/board-issue/created.js";
+import * as projectsV2Item from "../../../github-gql/issue.js";
+import { mockPrisma } from "../../../../test/mockPrisma.js";
 
 describe("handleProjectsV2ItemCreated", () => {
   const contentNodeId = created.projects_v2_item.content_node_id;

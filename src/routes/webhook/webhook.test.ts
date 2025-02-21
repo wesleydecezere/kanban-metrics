@@ -23,7 +23,7 @@ describe("webhook", () => {
 
   it("should handle projects v2 item edited event", async () => {
     const spyHandleProjectsV2ItemEditedEvent = jest
-      .spyOn(projectsV2Serice, "handleProjectsV2ItemEditedEvent")
+      .spyOn(projectsV2Serice, "handleProjectsV2ItemCreatedEvent")
       .mockImplementation(jest.fn());
     handlePostRoot({ body: titleEdited }, mockResponse);
     expect(spyHandleProjectsV2ItemEditedEvent).toHaveBeenCalledWith(

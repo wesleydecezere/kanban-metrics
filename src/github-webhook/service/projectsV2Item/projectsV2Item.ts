@@ -22,7 +22,7 @@ export async function handleProjectsV2ItemConvertedEvent({
   changes,
 }: ProjectsV2ItemConvertedEvent) {
   if (changes.content_type.from === null) {
-    console.log("Projects V2 item converted is has been created before");
+    console.log("Projects V2 item converted already has been created before");
     return;
   }
 
@@ -42,27 +42,9 @@ async function findIssueAndCreateRecord(nodeId: string) {
   console.log(`Created issue db record with id ${id}`);
 }
 
-// -----------------------------------------------------
-
-/**
- * escolher gh query + result type + prisma operation por
- * a. tipo do field
- *    - webhookEvent.changes.field_value.field_type
- *    - pode assumir todos os valores de graphql-schema::ProjectV2FieldType em lowercase)
- * b. nome do field (webhookEvent.changes.field_value.field_name)
- * c. id do field (webhookEvent.changes.field_value.field_node_id) ~ nunca muda!
- */
-
-/**
- * OPÇÕES PARA PEGAR FIELD VALUE
- * se changes tiver { from, to }, usar
- * se não, fazer buscar fieldValue pelo nodeId
- */
-
-// posso criar os campos buscando por todos ProjectV2[]Field no ProjectV2
-
 export async function handleProjectsV2ItemEditedEvent(
   event: ProjectsV2ItemEditedEvent
 ) {
   // TODO
+  console.log(event);
 }

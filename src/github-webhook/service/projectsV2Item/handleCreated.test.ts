@@ -3,15 +3,17 @@ import { getIssueByNodeId } from "../../../github-gql/issue.js";
 import { handleProjectsV2ItemCreatedEvent } from "./projectsV2Item.js";
 import { created } from "../../../../test/webhook-payloads/board-issue/created.js";
 import * as projectsV2Item from "../../../github-gql/issue.js";
-import { mockPrisma } from "../../../../test/mockPrisma.js";
+import { IssueOperations } from "../../../../prisma/operations/IssueOperations.js";
 
 describe("handleProjectsV2ItemCreatedEvent", () => {
   const contentNodeId = created.projects_v2_item.content_node_id;
 
   let spyGetIssueByNodeId: jest.SpyInstance;
+  let spyIssueCreate: jest.SpyInstance;
 
   beforeEach(() => {
     spyGetIssueByNodeId = jest.spyOn(projectsV2Item, "getIssueByNodeId");
+    spyIssueCreate = jest.spyOn(IssueOperations, "create");
   });
 
   afterEach(() => {
@@ -30,7 +32,7 @@ describe("handleProjectsV2ItemCreatedEvent", () => {
     await handleProjectsV2ItemCreatedEvent(projectsV2DraftIssueCreatedEvent);
 
     expect(spyGetIssueByNodeId).not.toHaveBeenCalled();
-    expect(mockPrisma.issue.create).not.toHaveBeenCalled();
+    expect(spyIssueCreate).not.toHaveBeenCalled();
   });
 
   it("should do nothing when the issue node is not found", async () => {
@@ -39,7 +41,7 @@ describe("handleProjectsV2ItemCreatedEvent", () => {
     await handleProjectsV2ItemCreatedEvent(created);
 
     expect(getIssueByNodeId).toHaveBeenCalledWith(contentNodeId);
-    expect(mockPrisma.issue.create).not.toHaveBeenCalled();
+    expect(spyIssueCreate).not.toHaveBeenCalled();
   });
 
   it("should create a new issue when handling an project v2 issue creation event", async () => {
@@ -49,13 +51,11 @@ describe("handleProjectsV2ItemCreatedEvent", () => {
       title: "Mock Issue Title",
     };
     spyGetIssueByNodeId.mockResolvedValue(mockIssue);
-
-    // seria legal não mexer no prisma aqui, só na camada de interface (prisma/operations)
-    mockPrisma.issue.create.mockResolvedValue(mockIssue);
+    spyIssueCreate.mockResolvedValue(mockIssue);
 
     await handleProjectsV2ItemCreatedEvent(created);
 
     expect(getIssueByNodeId).toHaveBeenCalledWith(contentNodeId);
-    expect(mockPrisma.issue.create).toHaveBeenCalledWith({ data: mockIssue });
+    expect(spyIssueCreate).toHaveBeenCalledWith({ ...mockIssue });
   });
 });

@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "dist",
     "allowJs": true,
-    "strictNullChecks": true, // @octokit/webhooks-types
+    "strictNullChecks": true,
     "resolveJsonModule": true
   },
   "include": ["src/**/*.ts"],

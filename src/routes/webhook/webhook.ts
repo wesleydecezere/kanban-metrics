@@ -5,12 +5,12 @@ import {
   isProjectsV2ItemEditedEvent,
   isProjectsV2ItemEvent,
   isProjectsV2ItemConvertedEvent,
-} from "../../github-webhook/model/event.js";
+} from "../../github-webhook/model/event/projectsV2Item.js";
 import {
   isIssuesEditedEvent,
   isIssuesEvent,
   isIssuesLabeledEvent,
-} from "../../github-webhook/model/issues.js";
+} from "../../github-webhook/model/event/issues.js";
 import {
   handleIssuesEditedEvent,
   handleIssuesLabeledEvent,
@@ -20,56 +20,44 @@ import {
   handleProjectsV2ItemEditedEvent,
   handleProjectsV2ItemConvertedEvent,
 } from "../../github-webhook/service/projectsV2Item/projectsV2Item.js";
+import { Request, Response } from "express";
 
 export const webhookRoutes = Router();
 
-webhookRoutes.get("/", (req, res) => {
+webhookRoutes.get("/", (_, res) => {
   console.log("[GET] /webhook");
-  res.send("Wellcome, webhook!");
+  res.send("Ok");
 });
 
 webhookRoutes.post("/", handlePostRoot);
 
-// @ts-expect-error - TS7006: Parameter 'req' implicitly has an 'any' type.
-export function handlePostRoot(req, res) {
+export function handlePostRoot(req: Request, res: Response) {
   console.log("[POST] /webhook");
+  res.send("Ok");
 
   const webhookEvent = req.body as WebhookEvent;
 
   if (!isProjectsV2ItemEvent(webhookEvent) && !isIssuesEvent(webhookEvent)) {
     console.log("Event is not a ProjectsV2ItemEvent or IssuesEvent");
-    res.send("Ok");
     return;
   }
 
-  if (isIssuesEditedEvent(webhookEvent)) {
-    handleIssuesEditedEvent(webhookEvent);
-  }
+  if (isIssuesEditedEvent(webhookEvent))
+    return handleIssuesEditedEvent(webhookEvent);
 
-  // identificar blocked/standby (na real não precisa pra velocity)
-  else if (isIssuesLabeledEvent(webhookEvent)) {
-    handleIssuesLabeledEvent(webhookEvent);
-  }
+  // to identify blocked/standby (not needed to calc velocity)
+  if (isIssuesLabeledEvent(webhookEvent))
+    return handleIssuesLabeledEvent(webhookEvent);
 
-  // melhorar identificação issue
-  else if (
-    isProjectsV2ItemCreatedEvent(webhookEvent) &&
-    webhookEvent.projects_v2_item.content_type === "Issue"
-  ) {
-    handleProjectsV2ItemCreatedEvent(webhookEvent);
-  } else if (
-    isProjectsV2ItemEditedEvent(webhookEvent) &&
-    webhookEvent.projects_v2_item.content_type === "Issue"
-  ) {
-    handleProjectsV2ItemEditedEvent(webhookEvent);
-  } else if (
-    isProjectsV2ItemConvertedEvent(webhookEvent) &&
-    webhookEvent.projects_v2_item.content_type === "Issue"
-  ) {
-    handleProjectsV2ItemConvertedEvent(webhookEvent);
-  }
+  if (isProjectsV2ItemCreatedEvent(webhookEvent))
+    return handleProjectsV2ItemCreatedEvent(webhookEvent);
 
-  // precisa restored?
-  res.send("/webhook fallback");
+  if (isProjectsV2ItemConvertedEvent(webhookEvent))
+    return handleProjectsV2ItemConvertedEvent(webhookEvent);
+
+  if (isProjectsV2ItemEditedEvent(webhookEvent))
+    return handleProjectsV2ItemEditedEvent(webhookEvent);
+
+  // TODO handle ItemRestoredEvent
   return;
 }

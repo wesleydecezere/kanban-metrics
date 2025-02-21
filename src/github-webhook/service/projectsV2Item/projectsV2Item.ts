@@ -22,7 +22,7 @@ export async function handleProjectsV2ItemConvertedEvent({
   changes,
 }: ProjectsV2ItemConvertedEvent) {
   if (changes.content_type.from === null) {
-    console.log("Projects V2 item converted already has been created before");
+    console.log("Projects V2 item converted has already been created before");
     return;
   }
 
@@ -33,7 +33,7 @@ async function findIssueAndCreateRecord(nodeId: string) {
   const issue = await getIssueByNodeId(nodeId);
 
   if (!issue) {
-    console.log("Issue not found on Github");
+    console.log("Issue not found on GitHub");
     return;
   }
 
@@ -45,6 +45,6 @@ async function findIssueAndCreateRecord(nodeId: string) {
 export async function handleProjectsV2ItemEditedEvent(
   event: ProjectsV2ItemEditedEvent
 ) {
-  // TODO
+  // TODO needs to verify if the content_type is issue
   console.log(event);
 }

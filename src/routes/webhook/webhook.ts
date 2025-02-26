@@ -6,15 +6,7 @@ import {
   isProjectsV2ItemEvent,
   isProjectsV2ItemConvertedEvent,
 } from "../../github-webhook/model/event/projectsV2Item.js";
-import {
-  isIssuesEditedEvent,
-  isIssuesEvent,
-  isIssuesLabeledEvent,
-} from "../../github-webhook/model/event/issues.js";
-import {
-  handleIssuesEditedEvent,
-  handleIssuesLabeledEvent,
-} from "../../github-webhook/service/issues.js";
+import { isIssuesEvent } from "../../github-webhook/model/event/issues.js";
 import {
   handleProjectsV2ItemCreatedEvent,
   handleProjectsV2ItemEditedEvent,
@@ -41,13 +33,6 @@ export function handlePostRoot(req: Request, res: Response) {
     console.log("Event is not a ProjectsV2ItemEvent or IssuesEvent");
     return;
   }
-
-  if (isIssuesEditedEvent(webhookEvent))
-    return handleIssuesEditedEvent(webhookEvent);
-
-  // to identify blocked/standby (not needed to calc velocity)
-  if (isIssuesLabeledEvent(webhookEvent))
-    return handleIssuesLabeledEvent(webhookEvent);
 
   if (isProjectsV2ItemCreatedEvent(webhookEvent))
     return handleProjectsV2ItemCreatedEvent(webhookEvent);

@@ -40,7 +40,7 @@ export const titleEdited: ProjectsV2ItemEditedEvent = {
   changes: {
     field_value: {
       field_node_id: "PVTF_lADOCuv1Ac4ApFNDzggjDrY",
-      // @ts-expect-error - TS2322: The expected type comes from property 'field_type' which is declared here on type '{ field_type: "number" | "single_select" | "date" | "text" | "iteration"; field_node_id: string; }'
+      // @ts-expect-error "@octokit/webhooks-types" package is not fully up to date
       field_type: "title",
       field_name: "Title",
       project_number: 1,

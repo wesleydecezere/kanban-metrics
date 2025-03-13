@@ -19,7 +19,7 @@ describe("handleProjectsV2ItemConvertedEvent", () => {
     jest.clearAllMocks();
   });
 
-  // when inserted on board, an issue creation event is triggered also
+  // when inserted into the board, a created event is also triggered
   it("should do nothing when converting from null", async () => {
     const projectsV2IssueFromNullConvertedEvent: ProjectsV2ItemConvertedEvent =
       {
@@ -27,7 +27,7 @@ describe("handleProjectsV2ItemConvertedEvent", () => {
         changes: {
           content_type: {
             ...converted.changes.content_type,
-            // @ts-expect-error octokit/webhooks-types is not fully up to date
+            // @ts-expect-error "@octokit/webhooks-types" package is not fully up to date
             from: null,
           },
         },

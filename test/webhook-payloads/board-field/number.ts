@@ -41,7 +41,7 @@ export const numberFieldEdited: ProjectsV2ItemEditedEvent = {
     field_value: {
       field_node_id: "PVTF_lADOCuv1Ac4ApFNDzggjDvw",
       field_type: "number",
-      // @ts-expect-error TS-2353: Object literal may only specify known properties, and '"field_name"' does not exist in type '{ field_type: "number" | "single_select" | "date" | "text" | "iteration"; field_node_id: string; }'
+      // @ts-expect-error "@octokit/webhooks-types" package is not fully up to date
       field_name: "Estimate",
       project_number: 1,
       from: null,

@@ -3,6 +3,7 @@ import {
   ProjectsV2ItemCreatedEvent,
   ProjectsV2ItemEditedEvent,
   ProjectsV2ItemEvent,
+  ProjectsV2ItemRestoredEvent,
   WebhookEvent,
 } from "@octokit/webhooks-types";
 
@@ -28,3 +29,9 @@ export const isProjectsV2ItemConvertedEvent = (
 ): event is ProjectsV2ItemConvertedEvent =>
   isProjectsV2ItemEvent(event) &&
   (event as ProjectsV2ItemConvertedEvent).action === "converted";
+
+export const isProjectsV2ItemRestoredEvent = (
+  event: WebhookEvent
+): event is ProjectsV2ItemConvertedEvent =>
+  isProjectsV2ItemEvent(event) &&
+  (event as ProjectsV2ItemRestoredEvent).action === "restored";

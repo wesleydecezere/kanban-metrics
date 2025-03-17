@@ -5,12 +5,14 @@ import {
   isProjectsV2ItemEditedEvent,
   isProjectsV2ItemEvent,
   isProjectsV2ItemConvertedEvent,
+  isProjectsV2ItemRestoredEvent,
 } from "../../github-webhook/model/event/projectsV2Item.js";
 import { isIssuesEvent } from "../../github-webhook/model/event/issues.js";
 import {
   handleProjectsV2ItemCreatedEvent,
   handleProjectsV2ItemEditedEvent,
   handleProjectsV2ItemConvertedEvent,
+  handleProjectsV2ItemRestoredEvent,
 } from "../../github-webhook/service/projectsV2Item/projectsV2Item.js";
 import { Request, Response } from "express";
 
@@ -43,6 +45,8 @@ export function handlePostRoot(req: Request, res: Response) {
   if (isProjectsV2ItemEditedEvent(webhookEvent))
     return handleProjectsV2ItemEditedEvent(webhookEvent);
 
-  // TODO handle ItemRestoredEvent
+  if (isProjectsV2ItemRestoredEvent(webhookEvent))
+    return handleProjectsV2ItemRestoredEvent(webhookEvent);
+
   return;
 }

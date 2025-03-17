@@ -8,11 +8,11 @@ describe("handleProjectsV2ItemConvertedEvent", () => {
   const contentNodeId = converted.projects_v2_item.content_node_id;
 
   let spyGetIssueByNodeId: jest.SpyInstance;
-  let spyIssueCreate: jest.SpyInstance;
+  let spyIssueCreateIfAbsent: jest.SpyInstance;
 
   beforeEach(() => {
     spyGetIssueByNodeId = jest.spyOn(projectsV2Item, "getIssueByNodeId");
-    spyIssueCreate = jest.spyOn(IssueOperations, "create");
+    spyIssueCreateIfAbsent = jest.spyOn(IssueOperations, "createIfAbsent");
   });
 
   afterEach(() => {
@@ -38,7 +38,7 @@ describe("handleProjectsV2ItemConvertedEvent", () => {
     );
 
     expect(spyGetIssueByNodeId).not.toHaveBeenCalled();
-    expect(spyIssueCreate).not.toHaveBeenCalled();
+    expect(spyIssueCreateIfAbsent).not.toHaveBeenCalled();
   });
 
   it("should do nothing when the issue node is not found", async () => {
@@ -47,7 +47,7 @@ describe("handleProjectsV2ItemConvertedEvent", () => {
     await handleProjectsV2ItemConvertedEvent(converted);
 
     expect(spyGetIssueByNodeId).toHaveBeenCalledWith(contentNodeId);
-    expect(spyIssueCreate).not.toHaveBeenCalled();
+    expect(spyIssueCreateIfAbsent).not.toHaveBeenCalled();
   });
 
   it("should create a new issue when handling an project v2 converted event", async () => {
@@ -57,11 +57,11 @@ describe("handleProjectsV2ItemConvertedEvent", () => {
       title: "Mock Issue Title",
     };
     spyGetIssueByNodeId.mockResolvedValue(mockIssue);
-    spyIssueCreate.mockResolvedValue(mockIssue);
+    spyIssueCreateIfAbsent.mockResolvedValue(mockIssue);
 
     await handleProjectsV2ItemConvertedEvent(converted);
 
     expect(spyGetIssueByNodeId).toHaveBeenCalledWith(contentNodeId);
-    expect(spyIssueCreate).toHaveBeenCalledWith({ ...mockIssue });
+    expect(spyIssueCreateIfAbsent).toHaveBeenCalledWith({ ...mockIssue });
   });
 });

@@ -7,9 +7,11 @@ type IssueProps = {
 };
 
 export class IssueOperations {
-  static async create(props: IssueProps) {
-    return prisma.issue.create({
-      data: props,
+  static async createIfAbsent(props: IssueProps) {
+    return prisma.issue.upsert({
+      where: { id: props.id },
+      update: {},
+      create: props,
     });
   }
 }

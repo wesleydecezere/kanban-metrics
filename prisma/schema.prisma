@@ -32,3 +32,9 @@ model YearWeek {
   startSprints Sprint[] @relation("StartYearWeek")
   endSprints Sprint[] @relation("EndYearWeek")
 }
+
+model Issue {
+  id String @id
+  number Int
+  title String
+}

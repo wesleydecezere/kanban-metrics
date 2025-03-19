@@ -1,8 +1,8 @@
 import { ProjectsV2ItemRestoredEvent } from "@octokit/webhooks-types";
-import { getIssueByNodeId } from "../../../github-gql/issue.js";
+import { getIssueByNodeId } from "../../../github-gql/client/issue/issue.js";
 import { handleProjectsV2ItemRestoredEvent } from "./projectsV2Item.js";
 import { restored } from "../../../../test/webhook-payloads/board-issue/restored.js";
-import * as projectsV2Item from "../../../github-gql/issue.js";
+import * as issueGqlClient from "../../../github-gql/client/issue/issue.js";
 import { IssueOperations } from "../../../../prisma/operations/IssueOperations.js";
 
 describe("handleProjectsV2ItemRestoredEvent", () => {
@@ -12,7 +12,7 @@ describe("handleProjectsV2ItemRestoredEvent", () => {
   let spyIssueCreateIfAbsent: jest.SpyInstance;
 
   beforeEach(() => {
-    spyGetIssueByNodeId = jest.spyOn(projectsV2Item, "getIssueByNodeId");
+    spyGetIssueByNodeId = jest.spyOn(issueGqlClient, "getIssueByNodeId");
     spyIssueCreateIfAbsent = jest.spyOn(IssueOperations, "createIfAbsent");
   });
 

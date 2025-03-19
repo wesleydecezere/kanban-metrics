@@ -14,4 +14,18 @@ export class IssueOperations {
       create: props,
     });
   }
+
+  static async updateTitleById(
+    title: IssueProps["title"],
+    id: IssueProps["id"]
+  ) {
+    return prisma.issue.update({
+      data: {
+        title,
+      },
+      where: {
+        id,
+      },
+    });
+  }
 }

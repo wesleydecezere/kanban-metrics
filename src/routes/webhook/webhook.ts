@@ -7,7 +7,6 @@ import {
   isProjectsV2ItemConvertedEvent,
   isProjectsV2ItemRestoredEvent,
 } from "../../github-webhook/model/event/projectsV2Item.js";
-import { isIssuesEvent } from "../../github-webhook/model/event/issues.js";
 import {
   handleProjectsV2ItemCreatedEvent,
   handleProjectsV2ItemEditedEvent,
@@ -16,11 +15,21 @@ import {
 } from "../../github-webhook/service/projectsV2Item/projectsV2Item.js";
 import { Request, Response } from "express";
 
+import {
+  isIssuesEditedEvent,
+  isIssuesEvent,
+  isIssuesLabeledEvent,
+} from "../../github-webhook/model/event/issues.js";
+import {
+  handleIssuesEditedEvent,
+  handleIssuesLabeledEvent,
+} from "../../github-webhook/service/issues.js";
+
 export const webhookRoutes = Router();
 
-webhookRoutes.get("/", (_, res) => {
+webhookRoutes.get("/", (req, res) => {
   console.log("[GET] /webhook");
-  res.send("Ok");
+  res.send("Wellcome, webhook!");
 });
 
 webhookRoutes.post("/", handlePostRoot);
@@ -36,6 +45,15 @@ export function handlePostRoot(req: Request, res: Response) {
     return;
   }
 
+  if (isIssuesEditedEvent(webhookEvent)) {
+    return handleIssuesEditedEvent(webhookEvent);
+  }
+
+  // identificar blocked/standby (na real não precisa pra velocity)
+  if (isIssuesLabeledEvent(webhookEvent)) {
+    return handleIssuesLabeledEvent(webhookEvent);
+  }
+
   if (isProjectsV2ItemCreatedEvent(webhookEvent))
     return handleProjectsV2ItemCreatedEvent(webhookEvent);
 
@@ -47,6 +65,4 @@ export function handlePostRoot(req: Request, res: Response) {
 
   if (isProjectsV2ItemRestoredEvent(webhookEvent))
     return handleProjectsV2ItemRestoredEvent(webhookEvent);
-
-  return;
 }

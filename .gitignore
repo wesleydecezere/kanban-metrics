@@ -145,5 +145,4 @@ src/generated/*
 !.env.vault
 
 # TODO files
-*.todo
-*.todo.md
+*.todo*

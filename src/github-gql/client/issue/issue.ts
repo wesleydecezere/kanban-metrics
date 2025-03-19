@@ -1,9 +1,9 @@
-import { GithubApolloClient } from "./GithubApolloClient.js";
 import {
+  IssueByNodeIdQuery,
   IssueByNodeIdQueryVariables,
   IssueByNodeIdDocument,
-  IssueByNodeIdQuery,
-} from "../generated/graphql/types.js";
+} from "../../../generated/graphql/types.js";
+import { GithubApolloClient } from "../GithubApolloClient.js";
 
 export async function getIssueByNodeId(id: string) {
   const {

@@ -1,7 +1,7 @@
 import { ProjectsV2ItemCreatedEvent } from "@octokit/webhooks-types";
 import { getIssueByNodeId } from "../../../github-gql/client/issue/issue.js";
 import { handleProjectsV2ItemCreatedEvent } from "./projectsV2Item.js";
-import { created } from "../../../../test/webhook-payloads/board-issue/created.js";
+import { created } from "../../../../test/webhook-payloads/created.js";
 import * as issueGqlClient from "../../../github-gql/client/issue/issue.js";
 import { IssueOperations } from "../../../../prisma/operations/IssueOperations.js";
 

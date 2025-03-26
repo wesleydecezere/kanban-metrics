@@ -1,4 +1,4 @@
-import { converted } from "../../../../test/webhook-payloads/board-issue/converted.js";
+import { converted } from "../../../../test/webhook-payloads/converted.js";
 import * as issueGqlClient from "../../../github-gql/client/issue/issue.js";
 import { handleProjectsV2ItemConvertedEvent } from "./projectsV2Item.js";
 import { ProjectsV2ItemConvertedEvent } from "@octokit/webhooks-types";

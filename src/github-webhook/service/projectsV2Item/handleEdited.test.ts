@@ -1,20 +1,23 @@
 import { handleProjectsV2ItemEditedEvent } from "./projectsV2Item.js";
 import { getFieldValueByItemNodeIdAndFieldName } from "../../../github-gql/client/projectV2Item/projectV2Item.js";
 import * as projectsV2ItemGqlClient from "../../../github-gql/client/projectV2Item/projectV2Item.js";
-import { titleEdited } from "../../../../test/webhook-payloads/board-issue/edited.js";
-import { numberFieldEdited } from "../../../../test/webhook-payloads/board-field/number.js";
+import { titleEdited } from "../../../../test/webhook-payloads/edited/title.js";
+import { numberFieldEdited } from "../../../../test/webhook-payloads/edited/number.js";
 import { mockPrisma } from "../../../../test/mockPrisma.js";
+import { IssueOperations } from "../../../../prisma/operations/IssueOperations.js";
 
-// TODO adaptar com padrão dos outros testes (sem manipular prisma)
+// TODO reavaliar como deixar os mocks typesafe
 
 describe("handleProjectsV2ItemEditedEvent", () => {
   let spyGetFieldValueByItemNodeIdAndFieldName: jest.SpyInstance;
+  let spyIssueUpdateByTitle: jest.SpyInstance;
 
   beforeEach(() => {
     spyGetFieldValueByItemNodeIdAndFieldName = jest.spyOn(
       projectsV2ItemGqlClient,
       "getFieldValueByItemNodeIdAndFieldName"
     );
+    spyIssueUpdateByTitle = jest.spyOn(IssueOperations, "updateTitleById");
   });
 
   afterEach(() => {
@@ -25,8 +28,13 @@ describe("handleProjectsV2ItemEditedEvent", () => {
     await handleProjectsV2ItemEditedEvent(numberFieldEdited);
 
     expect(getFieldValueByItemNodeIdAndFieldName).not.toHaveBeenCalled();
-    expect(mockPrisma.issue.update).not.toHaveBeenCalled();
+    expect(spyIssueUpdateByTitle).not.toHaveBeenCalled();
   });
+
+  // TODO add demais CDTs
+  it("should do nothing when doesn't find the field value on github", () => {});
+
+  it("should do nothing when the field value found isn't of type text", () => {});
 
   it("should update issue when the field edited is an issue title", async () => {
     const newIssueTitle = "Mock Issue Title";
@@ -36,9 +44,8 @@ describe("handleProjectsV2ItemEditedEvent", () => {
       __typename: "ProjectV2ItemFieldTextValue",
       text: newIssueTitle,
     });
-    mockPrisma.issue.update.mockResolvedValue({
+    spyIssueUpdateByTitle.mockResolvedValue({
       id: issueId,
-      number: 1,
       title: newIssueTitle,
     });
 
@@ -48,9 +55,6 @@ describe("handleProjectsV2ItemEditedEvent", () => {
       titleEdited.projects_v2_item.node_id,
       titleEdited.changes.field_value.field_type
     );
-    expect(mockPrisma.issue.update).toHaveBeenCalledWith({
-      data: { title: newIssueTitle },
-      where: { id: issueId },
-    });
+    expect(spyIssueUpdateByTitle).toHaveBeenCalledWith(newIssueTitle, issueId);
   });
 });

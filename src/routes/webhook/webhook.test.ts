@@ -1,8 +1,8 @@
 import { handlePostRoot } from "./webhook.js";
 import * as projectsV2ItemSerice from "../../github-webhook/service/projectsV2Item/projectsV2Item.js";
-import { created } from "../../../test/webhook-payloads/board-issue/created.js";
-import { converted } from "../../../test/webhook-payloads/board-issue/converted.js";
-import { titleEdited } from "../../../test/webhook-payloads/board-issue/edited.js";
+import { created } from "../../../test/webhook-payloads/created.js";
+import { converted } from "../../../test/webhook-payloads/converted.js";
+import { titleEdited } from "../../../test/webhook-payloads/edited/title.js";
 import { mock } from "jest-mock-extended";
 import { Request, Response } from "express";
 

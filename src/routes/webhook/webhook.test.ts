@@ -1,5 +1,6 @@
 import { handlePostRoot } from "./webhook.js";
-import * as projectsV2ItemSerice from "../../github-webhook/service/projectsV2Item/projectsV2Item.js";
+import * as projectsV2ItemService from "../../github-webhook/service/projectsV2Item/projectsV2Item.js";
+import * as projectsV2ItemEditedService from "../../github-webhook/service/projectsV2Item/edited/handleEditedEvent.js";
 import { created } from "../../../test/webhook-payloads/created.js";
 import { converted } from "../../../test/webhook-payloads/converted.js";
 import { titleEdited } from "../../../test/webhook-payloads/edited/title.js";
@@ -19,13 +20,13 @@ describe("webhook", () => {
     mockResponse = mock<Response>();
 
     spyHandleProjectsV2ItemCreated = jest
-      .spyOn(projectsV2ItemSerice, "handleProjectsV2ItemCreatedEvent")
+      .spyOn(projectsV2ItemService, "handleProjectsV2ItemCreatedEvent")
       .mockResolvedValue();
     spyHandleProjectsV2ItemConvertedEvent = jest
-      .spyOn(projectsV2ItemSerice, "handleProjectsV2ItemConvertedEvent")
+      .spyOn(projectsV2ItemService, "handleProjectsV2ItemConvertedEvent")
       .mockResolvedValue();
     spyHandleProjectsV2ItemEditedEvent = jest
-      .spyOn(projectsV2ItemSerice, "handleProjectsV2ItemEditedEvent")
+      .spyOn(projectsV2ItemEditedService, "handleProjectsV2ItemEditedEvent")
       .mockResolvedValue();
   });
 

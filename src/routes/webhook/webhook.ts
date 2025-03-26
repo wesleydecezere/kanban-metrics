@@ -9,10 +9,10 @@ import {
 } from "../../github-webhook/model/event/projectsV2Item.js";
 import {
   handleProjectsV2ItemCreatedEvent,
-  handleProjectsV2ItemEditedEvent,
   handleProjectsV2ItemConvertedEvent,
   handleProjectsV2ItemRestoredEvent,
 } from "../../github-webhook/service/projectsV2Item/projectsV2Item.js";
+import { handleProjectsV2ItemEditedEvent } from "../../github-webhook/service/projectsV2Item/edited/handleEditedEvent.js";
 import { Request, Response } from "express";
 
 import {

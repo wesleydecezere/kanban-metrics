@@ -2,12 +2,17 @@ import {
   ProjectsV2Item,
   ProjectsV2ItemConvertedEvent,
   ProjectsV2ItemCreatedEvent,
-  ProjectsV2ItemEditedEvent,
   ProjectsV2ItemRestoredEvent,
 } from "@octokit/webhooks-types";
 import { isProjectsV2Issue } from "../../model/projectsV2Item.js";
-import { getIssueByNodeId } from "../../../github-gql/issue.js";
+import { getIssueByNodeId } from "../../../github-gql/client/issue/issue.js";
 import { IssueOperations } from "../../../../prisma/operations/IssueOperations.js";
+
+/** TODO melhorar organização
+ * mudar nomes: handleIssueCreationEvents / handleFieldEditionEvents ou algo assim
+ * uma função em cada aquivo + common (arquivos pequenos)
+ * repensar testes: testar só uma vez cada funcionalidade
+ */
 
 export async function handleProjectsV2ItemCreatedEvent({
   projects_v2_item,
@@ -51,11 +56,4 @@ async function findIssueAndCreateRecord(nodeId: string) {
   const { id } = await IssueOperations.createIfAbsent({ id: nodeId, ...issue });
 
   console.log(`Created issue db record with id ${id}`);
-}
-
-export async function handleProjectsV2ItemEditedEvent(
-  event: ProjectsV2ItemEditedEvent
-) {
-  // TODO needs to verify if the content_type is issue
-  console.log(event);
 }

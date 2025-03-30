@@ -7,20 +7,19 @@ import {
   isProjectsV2ItemConvertedEvent,
   isProjectsV2ItemRestoredEvent,
 } from "../../github-webhook/model/event/projectsV2Item.js";
-import { isIssuesEvent } from "../../github-webhook/model/event/issues.js";
 import {
   handleProjectsV2ItemCreatedEvent,
-  handleProjectsV2ItemEditedEvent,
   handleProjectsV2ItemConvertedEvent,
   handleProjectsV2ItemRestoredEvent,
 } from "../../github-webhook/service/projectsV2Item/projectsV2Item.js";
+import { handleProjectsV2ItemEditedEvent } from "../../github-webhook/service/projectsV2Item/edited/handleEditedEvent.js";
 import { Request, Response } from "express";
 
 export const webhookRoutes = Router();
 
-webhookRoutes.get("/", (_, res) => {
+webhookRoutes.get("/", (req, res) => {
   console.log("[GET] /webhook");
-  res.send("Ok");
+  res.send("Wellcome, webhook!");
 });
 
 webhookRoutes.post("/", handlePostRoot);
@@ -31,8 +30,8 @@ export function handlePostRoot(req: Request, res: Response) {
 
   const webhookEvent = req.body as WebhookEvent;
 
-  if (!isProjectsV2ItemEvent(webhookEvent) && !isIssuesEvent(webhookEvent)) {
-    console.log("Event is not a ProjectsV2ItemEvent or IssuesEvent");
+  if (!isProjectsV2ItemEvent(webhookEvent)) {
+    console.log("Event is not a ProjectsV2ItemEvent");
     return;
   }
 
@@ -47,6 +46,4 @@ export function handlePostRoot(req: Request, res: Response) {
 
   if (isProjectsV2ItemRestoredEvent(webhookEvent))
     return handleProjectsV2ItemRestoredEvent(webhookEvent);
-
-  return;
 }

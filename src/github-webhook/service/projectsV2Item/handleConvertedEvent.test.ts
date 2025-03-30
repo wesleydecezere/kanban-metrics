@@ -1,5 +1,5 @@
-import { converted } from "../../../../test/webhook-payloads/board-issue/converted.js";
-import * as projectsV2Item from "../../../github-gql/issue.js";
+import { converted } from "../../../../test/webhook-payloads/converted.js";
+import * as issueGqlClient from "../../../github-gql/client/issue/issue.js";
 import { handleProjectsV2ItemConvertedEvent } from "./projectsV2Item.js";
 import { ProjectsV2ItemConvertedEvent } from "@octokit/webhooks-types";
 import { IssueOperations } from "../../../../prisma/operations/IssueOperations.js";
@@ -11,7 +11,7 @@ describe("handleProjectsV2ItemConvertedEvent", () => {
   let spyIssueCreateIfAbsent: jest.SpyInstance;
 
   beforeEach(() => {
-    spyGetIssueByNodeId = jest.spyOn(projectsV2Item, "getIssueByNodeId");
+    spyGetIssueByNodeId = jest.spyOn(issueGqlClient, "getIssueByNodeId");
     spyIssueCreateIfAbsent = jest.spyOn(IssueOperations, "createIfAbsent");
   });
 

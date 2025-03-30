@@ -15,16 +15,6 @@ import {
 import { handleProjectsV2ItemEditedEvent } from "../../github-webhook/service/projectsV2Item/edited/handleEditedEvent.js";
 import { Request, Response } from "express";
 
-import {
-  isIssuesEditedEvent,
-  isIssuesEvent,
-  isIssuesLabeledEvent,
-} from "../../github-webhook/model/event/issues.js";
-import {
-  handleIssuesEditedEvent,
-  handleIssuesLabeledEvent,
-} from "../../github-webhook/service/issues.js";
-
 export const webhookRoutes = Router();
 
 webhookRoutes.get("/", (req, res) => {
@@ -40,18 +30,9 @@ export function handlePostRoot(req: Request, res: Response) {
 
   const webhookEvent = req.body as WebhookEvent;
 
-  if (!isProjectsV2ItemEvent(webhookEvent) && !isIssuesEvent(webhookEvent)) {
-    console.log("Event is not a ProjectsV2ItemEvent or IssuesEvent");
+  if (!isProjectsV2ItemEvent(webhookEvent)) {
+    console.log("Event is not a ProjectsV2ItemEvent");
     return;
-  }
-
-  if (isIssuesEditedEvent(webhookEvent)) {
-    return handleIssuesEditedEvent(webhookEvent);
-  }
-
-  // identificar blocked/standby (na real não precisa pra velocity)
-  if (isIssuesLabeledEvent(webhookEvent)) {
-    return handleIssuesLabeledEvent(webhookEvent);
   }
 
   if (isProjectsV2ItemCreatedEvent(webhookEvent))

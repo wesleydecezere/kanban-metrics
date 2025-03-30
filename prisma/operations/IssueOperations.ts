@@ -20,12 +20,16 @@ export class IssueOperations {
     id: IssueProps["id"]
   ) {
     return prisma.issue.update({
-      data: {
-        title,
-      },
-      where: {
-        id,
-      },
+      where: { id },
+      data: { title },
+    });
+  }
+
+  static async updateTitleOrCreate(props: IssueProps) {
+    return prisma.issue.upsert({
+      where: { id: props.id },
+      update: { title: props.title },
+      create: props,
     });
   }
 }

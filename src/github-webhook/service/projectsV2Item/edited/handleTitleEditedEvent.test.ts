@@ -2,7 +2,6 @@ import { getFieldValueByItemNodeIdAndFieldName } from "../../../../github-gql/cl
 import * as projectsV2ItemGqlClient from "../../../../github-gql/client/projectV2Item/projectV2Item.js";
 import { titleEdited } from "../../../../../test/webhook-payloads/edited/title.js";
 import { numberFieldEdited } from "../../../../../test/webhook-payloads/edited/number.js";
-import { mockPrisma } from "../../../../../test/mockPrisma.js";
 import { IssueOperations } from "../../../../../prisma/operations/IssueOperations.js";
 import { handleProjectsV2ItemTitleEditedEvent } from "./handleTitleEditedEvent.js";
 
